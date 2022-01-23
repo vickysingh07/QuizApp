@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:kbc_app/views/loser.dart';
+import 'package:kbc_app/views/profile.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 Future<void> main() async {
@@ -20,10 +20,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.purple,
         ),
-        home: Looser(
-          wonMon: 50000,
-          correctAns: "Ram",
-        ),
+        home: const Profile(),
       ),
     );
   }
