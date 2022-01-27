@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:kbc_app/services/localdb.dart';
 import 'package:kbc_app/widgets/sidenavbar.dart';
 
 class Home extends StatefulWidget {
@@ -10,11 +11,43 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String name = "User Name";
+  String money = "--";
+  String lead = "---";
+  String proUrl = "---";
+  String level = "0";
+
+  getUserDet() async {
+    await LocalDB.getName().then((value) {
+      setState(() {
+        name = value.toString();
+      });
+    });
+
+    await LocalDB.getMoney().then((value) {
+      setState(() {
+        money = value.toString();
+      });
+    });
+
+    await LocalDB.getRank().then((value) {
+      setState(() {
+        lead = value.toString();
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserDet();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
-        drawer: const SideNav(),
+        drawer: SideNav(name, money, lead, proUrl, level),
         body: SingleChildScrollView(
             child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 15),

@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:kbc_app/views/profile.dart';
+import 'package:kbc_app/services/localdb.dart';
+import 'package:kbc_app/views/home.dart';
+import 'package:kbc_app/views/login.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 Future<void> main() async {
@@ -9,8 +11,30 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool isLogIn = false;
+
+  getLoggedInState() async {
+    await LocalDB.getUserID().then((value) {
+      setState(() {
+        isLogIn = value.toString() != "null";
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getLoggedInState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return OverlaySupport.global(
@@ -20,7 +44,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.purple,
         ),
-        home: const Profile(),
+        home: isLogIn ? const Home() : const Login(),
       ),
     );
   }
