@@ -28,8 +28,12 @@ class SideNav extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            Profile(name, rank, money, proUrl, level)));
+                        builder: (context) => Profile(
+                            name: name,
+                            rank: rank,
+                            money: money,
+                            proUrl: proUrl,
+                            level: level)));
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

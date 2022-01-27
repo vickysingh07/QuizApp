@@ -35,6 +35,18 @@ class _HomeState extends State<Home> {
         lead = value.toString();
       });
     });
+
+    await LocalDB.getUrl().then((value) {
+      setState(() {
+        proUrl = value.toString();
+      });
+    });
+
+    await LocalDB.getLevel().then((value) {
+      setState(() {
+        level = value.toString();
+      });
+    });
   }
 
   @override

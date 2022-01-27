@@ -1,10 +1,20 @@
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable
+
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
-  const Profile(
-      String name, String rank, String money, String proUrl, String level,
-      {Key? key})
-      : super(key: key);
+  String name;
+  String proUrl;
+  String rank;
+  String level;
+  String money;
+  Profile({
+    required this.name,
+    required this.proUrl,
+    required this.level,
+    required this.rank,
+    required this.money,
+  });
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -41,7 +51,8 @@ class _ProfileState extends State<Profile> {
                 children: [
                   Stack(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(widget.proUrl),
                         radius: 50,
                       ),
                       Positioned(
@@ -62,9 +73,9 @@ class _ProfileState extends State<Profile> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text(
-                    "Ram\nRs.50,000)}",
-                    style: TextStyle(
+                  Text(
+                    widget.name,
+                    style: const TextStyle(
                         fontSize: 22,
                         color: Colors.white,
                         fontWeight: FontWeight.w500),
@@ -86,7 +97,7 @@ class _ProfileState extends State<Profile> {
                     children: [
                       Column(
                         children: [
-                          Text("#60",
+                          Text("#${widget.rank}",
                               style: TextStyle(
                                   fontSize: 42,
                                   fontWeight: FontWeight.w300,
