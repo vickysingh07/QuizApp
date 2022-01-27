@@ -157,9 +157,14 @@ class _ProfileState extends State<Profile> {
                               indent: 10,
                               endIndent: 10,
                             ),
-                        itemCount: 12),
+                        itemCount: 10),
                   ),
                 ),
+                Container(
+                    margin: const EdgeInsets.only(bottom: 200),
+                    child: ElevatedButton(
+                        onPressed: () {},
+                        child: const Text("Show My Position"))),
               ],
             )
           ],

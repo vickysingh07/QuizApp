@@ -19,7 +19,9 @@ class FireDB {
         "name": name,
         "email": email,
         "photoUrl": photoUrl,
-        "money": "5000"
+        "money": 0,
+        "rank": "NA",
+        "level": "0"
       }).then((value) async {
         await LocalDB.saveMoney("0");
         await LocalDB.saveRank("NA");
@@ -47,6 +49,17 @@ class FireDB {
     if (user.toString() == "null") {
       return false;
     } else {
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(current_user.uid)
+          .get()
+          .then((value) async {
+        user = value.data().toString();
+        print(user);
+        await LocalDB.saveMoney(value["money"].toString());
+        await LocalDB.saveRank(value["rank"]);
+        await LocalDB.saveLevel(value["level"]);
+      });
       return true;
     }
   }
