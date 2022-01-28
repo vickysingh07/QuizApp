@@ -1,18 +1,85 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: non_constant_identifier_names, use_key_in_widget_constructors, must_be_immutable, avoid_print
 
-class QuizIntro extends StatelessWidget {
-  const QuizIntro({Key? key}) : super(key: key);
+import 'package:flutter/material.dart';
+import 'package:kbc_app/services/checkquizunlock.dart';
+import 'package:kbc_app/services/quizdhandha.dart';
+
+class QuizIntro extends StatefulWidget {
+  String QuizName;
+  String QuizImgUrl;
+  String QuizTopics;
+  String QuizDuration;
+  String QuizAbout;
+  String QuizId;
+  String QuizPrice;
+  QuizIntro(
+      {required this.QuizAbout,
+      required this.QuizDuration,
+      required this.QuizImgUrl,
+      required this.QuizName,
+      required this.QuizTopics,
+      required this.QuizId,
+      required this.QuizPrice});
+
+  @override
+  State<QuizIntro> createState() => _QuizIntroState();
+}
+
+class _QuizIntroState extends State<QuizIntro> {
+  bool quizIsUnlcoked = false;
+  getQuizUnlockStatus() async {
+    await CheckQuizUnlock.checkQuizUnlockStatus(widget.QuizId)
+        .then((unlockStatus) {
+      setState(() {
+        quizIsUnlcoked = unlockStatus;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getQuizUnlockStatus();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: ElevatedButton(
-            child: const Text(
-              "START QUIZ",
-              style: TextStyle(fontSize: 20),
+            child: Text(
+              quizIsUnlcoked ? "START QUIZ" : "UNLOCK QUIZ",
+              style: const TextStyle(fontSize: 20),
             ),
-            onPressed: () {}),
+            onPressed: () {
+              quizIsUnlcoked
+                  ? print("Quiz is Unlocked")
+                  : QuizDhandha.buyQuiz(
+                          QuizID: widget.QuizId,
+                          QuizPrice: int.parse(widget.QuizPrice))
+                      .then((quizKharidLiya) {
+                      if (quizKharidLiya) {
+                        print("GIII");
+                        setState(() {
+                          quizIsUnlcoked = true;
+                        });
+                      } else {
+                        return showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: const Text(
+                                      "You do not have enough money to buy this QUIZ!"),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text("OK"))
+                                  ],
+                                ));
+                      }
+                    });
+            }),
         appBar: AppBar(
           title: const Text("KBC Quiz App"),
         ),
@@ -28,14 +95,14 @@ class QuizIntro extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Quiz Name",
+                    Text(
+                      widget.QuizName,
                       textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+                      style: const TextStyle(
+                          fontSize: 30, fontWeight: FontWeight.w500),
                     ),
                     Image.network(
-                      "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                      widget.QuizImgUrl,
                       fit: BoxFit.cover,
                       height: 230,
                       width: MediaQuery.of(context).size.width,
@@ -61,9 +128,9 @@ class QuizIntro extends StatelessWidget {
                           )
                         ],
                       ),
-                      const Text(
-                        "Science, Space, Astronmy, Rocket, ISRO",
-                        style: TextStyle(fontSize: 17),
+                      Text(
+                        widget.QuizTopics,
+                        style: const TextStyle(fontSize: 17),
                       ),
                       Container(
                         padding: const EdgeInsets.all(18),
@@ -84,10 +151,10 @@ class QuizIntro extends StatelessWidget {
                                 )
                               ],
                             ),
-                            const Text(
-                              "15 Minutes",
+                            Text(
+                              "${widget.QuizDuration} Minutes",
                               textAlign: TextAlign.left,
-                              style: TextStyle(fontSize: 17),
+                              style: const TextStyle(fontSize: 17),
                             )
                           ],
                         ),
@@ -111,10 +178,10 @@ class QuizIntro extends StatelessWidget {
                                 )
                               ],
                             ),
-                            const Text(
-                              " Rs. 10000",
+                            Text(
+                              " Rs. ${widget.QuizPrice}",
                               textAlign: TextAlign.left,
-                              style: TextStyle(fontSize: 17),
+                              style: const TextStyle(fontSize: 17),
                             )
                           ],
                         ),
@@ -138,9 +205,9 @@ class QuizIntro extends StatelessWidget {
                                 )
                               ],
                             ),
-                            const Text(
-                              "Ram is a good boy, very good boy, very very good boy, actually the best boy.Ram is a good boy, very good boy, very very good boy, actually the best boy.Ram is a good boy, very good boy, very very good boy, actually the best boy.Ram is a good boy, very good boy, very very good boy, actually the best boy.Ram is a good boy, very good boy, very very good boy, actually the best boy.Ram is a good boy, very good boy, very very good boy, actually the best boy.Ram is a good boy, very good boy, very very good boy, actually the best boy.Ram is a good boy, very good boy, very very good boy, actually the best boy.",
-                              style: TextStyle(fontSize: 17),
+                            Text(
+                              widget.QuizAbout,
+                              style: const TextStyle(fontSize: 17),
                             )
                           ],
                         ),

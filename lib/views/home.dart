@@ -2,6 +2,7 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:kbc_app/services/home_fire.dart';
 import 'package:kbc_app/services/localdb.dart';
 import 'package:kbc_app/views/quizintro.dart';
 import 'package:kbc_app/widgets/sidenavbar.dart';
@@ -20,7 +21,7 @@ class _HomeState extends State<Home> {
   String proUrl = "---";
   String level = "0";
 
-  // late List quizzes;
+  late List quizzes;
 
   bool isLoading = true;
   getUserDet() async {
@@ -55,10 +56,17 @@ class _HomeState extends State<Home> {
     });
   }
 
+  getquiz() async {
+    await HomeFire.getquizzes().then((returned_quizzes) {
+      setState(() {
+        quizzes = returned_quizzes;
+      });
+    });
+  }
   // late Map<String, dynamic> TopPlayer;
   // getTopPlayer() async {
   //   await FirebaseFirestore.instance
-  //       .collection("users")
+  //       .collection("user")
   //       .orderBy("money", descending: true)
   //       .get()
   //       .then((value) {
@@ -72,6 +80,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     getUserDet();
+    getquiz();
     // getTopPlayer();
   }
 
@@ -289,7 +298,22 @@ class _HomeState extends State<Home> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => QuizIntro()));
+                                            builder: (context) => QuizIntro(
+                                                  QuizAbout: (quizzes[0])[
+                                                      "about_quiz"],
+                                                  QuizImgUrl: (quizzes[0])[
+                                                      "quiz_thumbnail"],
+                                                  QuizDuration:
+                                                      (quizzes[0])["duration"],
+                                                  QuizTopics:
+                                                      (quizzes[0])["topics"],
+                                                  QuizName:
+                                                      (quizzes[0])["quiz_name"],
+                                                  QuizId:
+                                                      (quizzes[0])["Quizid"],
+                                                  QuizPrice: (quizzes[0])[
+                                                      "unlock_money"],
+                                                )));
                                   },
                                   child: Stack(
                                     children: [
@@ -298,7 +322,7 @@ class _HomeState extends State<Home> {
                                         child: Container(
                                           height: 150,
                                           child: Image.network(
-                                            "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                                            (quizzes[1])["quiz_thumbnail"],
                                             fit: BoxFit.cover,
                                           ),
                                         ),

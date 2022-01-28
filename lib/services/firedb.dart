@@ -37,7 +37,7 @@ class FireDB {
     String user = "";
 
     await FirebaseFirestore.instance
-        .collection("users")
+        .collection("user")
         .doc(current_user!.uid)
         .get()
         .then((value) async {
@@ -50,7 +50,7 @@ class FireDB {
       return false;
     } else {
       await FirebaseFirestore.instance
-          .collection("users")
+          .collection("user")
           .doc(current_user.uid)
           .get()
           .then((value) async {
