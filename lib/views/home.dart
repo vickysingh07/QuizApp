@@ -1,6 +1,9 @@
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, sized_box_for_whitespace, duplicate_ignore
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:kbc_app/services/localdb.dart';
+import 'package:kbc_app/views/quizintro.dart';
 import 'package:kbc_app/widgets/sidenavbar.dart';
 
 class Home extends StatefulWidget {
@@ -17,6 +20,9 @@ class _HomeState extends State<Home> {
   String proUrl = "---";
   String level = "0";
 
+  // late List quizzes;
+
+  bool isLoading = true;
   getUserDet() async {
     await LocalDB.getName().then((value) {
       setState(() {
@@ -49,164 +55,482 @@ class _HomeState extends State<Home> {
     });
   }
 
+  // late Map<String, dynamic> TopPlayer;
+  // getTopPlayer() async {
+  //   await FirebaseFirestore.instance
+  //       .collection("users")
+  //       .orderBy("money", descending: true)
+  //       .get()
+  //       .then((value) {
+  //     setState(() {
+  //       TopPlayer = value.docs.elementAt(0).data();
+  //     });
+  //   });
+  // }
+
   @override
   void initState() {
     super.initState();
     getUserDet();
+    // getTopPlayer();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text('KBC - Quiz Game'),
+        ),
         drawer: SideNav(name, money, lead, proUrl, level),
         body: SingleChildScrollView(
-            child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                child: Column(children: [
-                  CarouselSlider(
-                      items: [
-                        Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              image: const DecorationImage(
-                                  image: NetworkImage(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 15),
+            child: Column(
+              children: [
+                CarouselSlider(
+                    items: [
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                  "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                                ),
+                                fit: BoxFit.cover)),
+                      ),
+                    ],
+                    options: CarouselOptions(
+                        height: 180,
+                        enlargeCenterPage: true,
+                        autoPlay: true,
+                        aspectRatio: 16 / 9,
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enableInfiniteScroll: true,
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        viewportFraction: 0.8)),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: const [
+                      CircleAvatar(backgroundColor: Colors.purple, radius: 35),
+                      CircleAvatar(
+                          backgroundColor: Colors.redAccent, radius: 35),
+                      CircleAvatar(backgroundColor: Colors.green, radius: 35),
+                      CircleAvatar(
+                          backgroundColor: Colors.yellowAccent, radius: 35),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: Row(
+                    children: [
+                      Flexible(
+                          flex: 1,
+                          fit: FlexFit.tight,
+                          child: Stack(
+                            children: [
+                              Card(
+                                elevation: 8,
+                                child: Container(
+                                  height: 150,
+                                  child: Image.network(
                                     "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                                    fit: BoxFit.cover,
                                   ),
-                                  fit: BoxFit.cover)),
+                                ),
+                              ),
+                            ],
+                          )),
+                      SizedBox(width: 10),
+                      Flexible(
+                          flex: 1,
+                          fit: FlexFit.tight,
+                          child: Stack(
+                            children: [
+                              Card(
+                                elevation: 8,
+                                child: Container(
+                                  height: 150,
+                                  child: Image.network(
+                                      "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                            ],
+                          ))
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: Row(
+                    children: [
+                      Flexible(
+                          flex: 1,
+                          fit: FlexFit.tight,
+                          child: Stack(
+                            children: [
+                              Card(
+                                elevation: 8,
+                                child: Container(
+                                  height: 150,
+                                  child: Image.network(
+                                    "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )),
+                      SizedBox(width: 10),
+                      Flexible(
+                          flex: 1,
+                          fit: FlexFit.tight,
+                          child: Stack(
+                            children: [
+                              Card(
+                                elevation: 8,
+                                child: Container(
+                                  height: 150,
+                                  child: Image.network(
+                                      "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                            ],
+                          ))
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  child: Stack(
+                    children: [
+                      Card(
+                        elevation: 8,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 100,
+                          child: Image.network(
+                              "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                              fit: BoxFit.cover),
                         ),
-                      ],
-                      options: CarouselOptions(
-                          height: 180,
-                          enlargeCenterPage: true,
-                          autoPlay: true,
-                          aspectRatio: 16 / 9,
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          enableInfiniteScroll: true,
-                          autoPlayAnimationDuration:
-                              const Duration(milliseconds: 800),
-                          viewportFraction: 0.8)),
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        CircleAvatar(
-                            backgroundColor: Colors.purple, radius: 35),
-                        CircleAvatar(
-                            backgroundColor: Colors.redAccent, radius: 35),
-                        CircleAvatar(backgroundColor: Colors.green, radius: 35),
-                        CircleAvatar(
-                            backgroundColor: Colors.yellowAccent, radius: 35),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    child: Row(
-                      children: [
-                        Flexible(
-                            flex: 1,
-                            fit: FlexFit.tight,
-                            child: Stack(
-                              children: [
-                                Card(
-                                  elevation: 8,
-                                  // ignore: sized_box_for_whitespace
-                                  child: Container(
-                                    height: 150,
-                                    child: Image.network(
-                                      "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-                        const SizedBox(width: 10),
-                        Flexible(
-                            flex: 1,
-                            fit: FlexFit.tight,
-                            child: Stack(
-                              children: [
-                                Card(
-                                  elevation: 8,
-                                  // ignore: sized_box_for_whitespace
-                                  child: Container(
-                                    height: 150,
-                                    child: Image.network(
-                                        "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                        fit: BoxFit.cover),
-                                  ),
-                                ),
-                              ],
-                            ))
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    child: Row(
-                      children: [
-                        Flexible(
-                            flex: 1,
-                            fit: FlexFit.tight,
-                            child: Stack(
-                              children: [
-                                Card(
-                                  elevation: 8,
-                                  // ignore: sized_box_for_whitespace
-                                  child: Container(
-                                    height: 150,
-                                    child: Image.network(
-                                      "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-                        const SizedBox(width: 10),
-                        Flexible(
-                            flex: 1,
-                            fit: FlexFit.tight,
-                            child: Stack(
-                              children: [
-                                Card(
-                                  elevation: 8,
-                                  // ignore: sized_box_for_whitespace
-                                  child: Container(
-                                    height: 150,
-                                    child: Image.network(
-                                        "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                        fit: BoxFit.cover),
-                                  ),
-                                ),
-                              ],
-                            ))
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Stack(
-                      children: [
-                        Card(
-                          elevation: 8,
-                          // ignore: sized_box_for_whitespace
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 100,
-                            child: Image.network(
-                                "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                fit: BoxFit.cover),
+                ),
+                Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Richest Player In The World",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                  // backgroundImage:
+                                  //     NetworkImage(TopPlayer["photoUrl"]),
+                                  // radius: 50,
+                                  ),
+                              SizedBox(
+                                width: 50,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    "Vicky Singh",
+                                    // TopPlayer["name"].toString().length >= 16
+                                    //     ? "${TopPlayer["name"].toString().substring(0, 15)}..."
+                                    //     : TopPlayer["name"],
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text("Rs. 450000",
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold))
+                                ],
+                              )
+                            ],
+                          )
+                        ])),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Unlock New Quizzes",
+                        style: TextStyle(
+                            fontSize: 19, fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.left,
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                        child: Row(
+                          children: [
+                            Flexible(
+                                flex: 1,
+                                fit: FlexFit.tight,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => QuizIntro()));
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      Card(
+                                        elevation: 8,
+                                        child: Container(
+                                          height: 150,
+                                          child: Image.network(
+                                            "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                            SizedBox(width: 10),
+                            Flexible(
+                                flex: 1,
+                                fit: FlexFit.tight,
+                                child: Stack(
+                                  children: [
+                                    Card(
+                                      elevation: 8,
+                                      child: Container(
+                                        height: 150,
+                                        child: Image.network(
+                                            "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                                            fit: BoxFit.cover),
+                                      ),
+                                    ),
+                                  ],
+                                ))
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                        child: Row(
+                          children: [
+                            Flexible(
+                                flex: 1,
+                                fit: FlexFit.tight,
+                                child: Stack(
+                                  children: [
+                                    Card(
+                                      elevation: 8,
+                                      child: Container(
+                                        height: 150,
+                                        child: Image.network(
+                                          "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                            SizedBox(width: 10),
+                            Flexible(
+                                flex: 1,
+                                fit: FlexFit.tight,
+                                child: Stack(
+                                  children: [
+                                    Card(
+                                      elevation: 8,
+                                      child: Container(
+                                        height: 150,
+                                        child: Image.network(
+                                            "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                                            fit: BoxFit.cover),
+                                      ),
+                                    ),
+                                  ],
+                                ))
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                        child: Row(
+                          children: [
+                            Flexible(
+                                flex: 1,
+                                fit: FlexFit.tight,
+                                child: Stack(
+                                  children: [
+                                    Card(
+                                      elevation: 8,
+                                      child: Container(
+                                        height: 150,
+                                        child: Image.network(
+                                          "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                            SizedBox(width: 10),
+                            Flexible(
+                                flex: 1,
+                                fit: FlexFit.tight,
+                                child: Stack(
+                                  children: [
+                                    Card(
+                                      elevation: 8,
+                                      child: Container(
+                                        height: 150,
+                                        child: Image.network(
+                                            "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                                            fit: BoxFit.cover),
+                                      ),
+                                    ),
+                                  ],
+                                ))
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                        child: Row(
+                          children: [
+                            Flexible(
+                                flex: 1,
+                                fit: FlexFit.tight,
+                                child: Stack(
+                                  children: [
+                                    Card(
+                                      elevation: 8,
+                                      child: Container(
+                                        height: 150,
+                                        child: Image.network(
+                                          "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                            SizedBox(width: 10),
+                            Flexible(
+                                flex: 1,
+                                fit: FlexFit.tight,
+                                child: Stack(
+                                  children: [
+                                    Card(
+                                      elevation: 8,
+                                      child: Container(
+                                        height: 150,
+                                        child: Image.network(
+                                            "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                                            fit: BoxFit.cover),
+                                      ),
+                                    ),
+                                  ],
+                                ))
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ]))));
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  child: Stack(
+                    children: [
+                      Card(
+                        elevation: 8,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 100,
+                          child: Image.network(
+                              "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                              fit: BoxFit.cover),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                CarouselSlider(
+                    items: [
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                  "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
+                                ),
+                                fit: BoxFit.cover)),
+                      ),
+                    ],
+                    options: CarouselOptions(
+                        height: 180,
+                        autoPlay: true,
+                        aspectRatio: 16 / 9,
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enableInfiniteScroll: true,
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        viewportFraction: 0.8)),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: const [
+                      CircleAvatar(backgroundColor: Colors.purple, radius: 35),
+                      CircleAvatar(
+                          backgroundColor: Colors.redAccent, radius: 35),
+                      CircleAvatar(backgroundColor: Colors.green, radius: 35),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: const [
+                      CircleAvatar(backgroundColor: Colors.purple, radius: 35),
+                      CircleAvatar(
+                          backgroundColor: Colors.redAccent, radius: 35),
+                      CircleAvatar(backgroundColor: Colors.green, radius: 35),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: const [
+                      CircleAvatar(backgroundColor: Colors.purple, radius: 35),
+                      CircleAvatar(
+                          backgroundColor: Colors.redAccent, radius: 35),
+                      CircleAvatar(backgroundColor: Colors.green, radius: 35),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }
