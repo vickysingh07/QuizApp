@@ -1,15 +1,51 @@
+// ignore_for_file: use_key_in_widget_constructors, unnecessary_new, must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kbc_app/services/QuestionModel.dart';
+import 'package:kbc_app/services/QuizQueCreator.dart';
 import 'package:kbc_app/widgets/lifeline_sidebar.dart';
 
 class Question extends StatefulWidget {
-  const Question({Key? key}) : super(key: key);
+  String quizID;
+  int queMoney;
+  Question({required this.quizID, required this.queMoney});
 
   @override
   _QuestionState createState() => _QuestionState();
 }
 
 class _QuestionState extends State<Question> {
+  QuestionModel questionModel = new QuestionModel();
+  genQue() async {
+    await QuizQueCreator.genQuizQue(widget.quizID, widget.queMoney)
+        .then((queData) {
+      setState(() {
+        questionModel.question = queData["question"];
+        questionModel.correctAnswer = queData["correctAnswer"];
+
+        List options = [
+          queData["opt1"],
+          queData["opt2"],
+          queData["opt3"],
+          queData["opt4"],
+        ];
+        options.shuffle();
+
+        questionModel.option1 = options[0];
+        questionModel.option2 = options[1];
+        questionModel.option3 = options[2];
+        questionModel.option4 = options[3];
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    genQue();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,7 +56,7 @@ class _QuestionState extends State<Question> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: Text(
-            "Rs. 20,000",
+            "Rs. ${widget.queMoney}",
             style: GoogleFonts.acme(fontSize: 27),
           ),
           centerTitle: true,
@@ -67,7 +103,7 @@ class _QuestionState extends State<Question> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20)),
                 child: Text(
-                  "Ram is a good boy, very good boy, Who is a good boy.......",
+                  questionModel.question,
                   style: GoogleFonts.aBeeZee(fontSize: 22),
                   textAlign: TextAlign.center,
                 ),
@@ -80,33 +116,9 @@ class _QuestionState extends State<Question> {
                 padding: const EdgeInsets.all(14),
                 margin: const EdgeInsets.symmetric(horizontal: 17, vertical: 5),
                 decoration: BoxDecoration(
-                    color: Colors.red.withOpacity(0.8),
+                    color: Colors.white.withOpacity(0.6),
                     borderRadius: BorderRadius.circular(33)),
-                child: Text("A. Ram",
-                    style: GoogleFonts.aBeeZee(
-                        fontSize: 17, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.all(14),
-                margin: const EdgeInsets.symmetric(horizontal: 17, vertical: 5),
-                decoration: BoxDecoration(
-                    color: Colors.yellow.withOpacity(0.8),
-                    borderRadius: BorderRadius.circular(33)),
-                child: Text("A. Satrughan",
-                    style: GoogleFonts.aBeeZee(
-                        fontSize: 17, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.all(14),
-                margin: const EdgeInsets.symmetric(horizontal: 17, vertical: 5),
-                decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.8),
-                    borderRadius: BorderRadius.circular(33)),
-                child: Text("A. Bharat",
+                child: Text("A. ${questionModel.option1}",
                     style: GoogleFonts.aBeeZee(
                         fontSize: 17, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center),
@@ -118,7 +130,31 @@ class _QuestionState extends State<Question> {
                 decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.6),
                     borderRadius: BorderRadius.circular(33)),
-                child: Text("A. Lakshman",
+                child: Text("B. ${questionModel.option2}",
+                    style: GoogleFonts.aBeeZee(
+                        fontSize: 17, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.all(14),
+                margin: const EdgeInsets.symmetric(horizontal: 17, vertical: 5),
+                decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.6),
+                    borderRadius: BorderRadius.circular(33)),
+                child: Text("C. ${questionModel.option3}",
+                    style: GoogleFonts.aBeeZee(
+                        fontSize: 17, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.all(14),
+                margin: const EdgeInsets.symmetric(horizontal: 17, vertical: 5),
+                decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.6),
+                    borderRadius: BorderRadius.circular(33)),
+                child: Text("D. ${questionModel.option4}",
                     style: GoogleFonts.aBeeZee(
                         fontSize: 17, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center),

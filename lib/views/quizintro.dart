@@ -1,7 +1,9 @@
 // ignore_for_file: non_constant_identifier_names, use_key_in_widget_constructors, must_be_immutable, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:kbc_app/services/QuizQueCreator.dart';
 import 'package:kbc_app/services/checkquizunlock.dart';
+import 'package:kbc_app/services/question.dart';
 import 'package:kbc_app/services/quizdhandha.dart';
 
 class QuizIntro extends StatefulWidget {
@@ -26,12 +28,12 @@ class QuizIntro extends StatefulWidget {
 }
 
 class _QuizIntroState extends State<QuizIntro> {
-  bool quizIsUnlcoked = false;
+  bool quizIsUnlocked = false;
   getQuizUnlockStatus() async {
     await CheckQuizUnlock.checkQuizUnlockStatus(widget.QuizId)
         .then((unlockStatus) {
       setState(() {
-        quizIsUnlcoked = unlockStatus;
+        quizIsUnlocked = unlockStatus;
       });
     });
   }
@@ -48,12 +50,16 @@ class _QuizIntroState extends State<QuizIntro> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: ElevatedButton(
             child: Text(
-              quizIsUnlcoked ? "START QUIZ" : "UNLOCK QUIZ",
+              quizIsUnlocked ? "START QUIZ" : "UNLOCK QUIZ",
               style: const TextStyle(fontSize: 20),
             ),
-            onPressed: () {
-              quizIsUnlcoked
-                  ? print("Quiz is Unlocked")
+            onPressed: () async {
+              quizIsUnlocked
+                  ? Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              Question(quizID: widget.QuizId, queMoney: 5000)))
                   : QuizDhandha.buyQuiz(
                           QuizID: widget.QuizId,
                           QuizPrice: int.parse(widget.QuizPrice))
@@ -61,7 +67,7 @@ class _QuizIntroState extends State<QuizIntro> {
                       if (quizKharidLiya) {
                         print("GIII");
                         setState(() {
-                          quizIsUnlcoked = true;
+                          quizIsUnlocked = true;
                         });
                       } else {
                         return showDialog(
@@ -159,33 +165,35 @@ class _QuizIntroState extends State<QuizIntro> {
                           ],
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(18),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: const [
-                                Icon(Icons.money),
-                                SizedBox(
-                                  width: 6,
-                                ),
-                                Text(
-                                  "Money -",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
+                      quizIsUnlocked
+                          ? Container()
+                          : Container(
+                              padding: const EdgeInsets.all(18),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: const [
+                                      Icon(Icons.money),
+                                      SizedBox(
+                                        width: 6,
+                                      ),
+                                      Text(
+                                        "Money -",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  ),
+                                  Text(
+                                    " Rs. ${widget.QuizPrice}",
+                                    textAlign: TextAlign.left,
+                                    style: const TextStyle(fontSize: 17),
+                                  )
+                                ],
+                              ),
                             ),
-                            Text(
-                              " Rs. ${widget.QuizPrice}",
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(fontSize: 17),
-                            )
-                          ],
-                        ),
-                      ),
                       Container(
                         padding: const EdgeInsets.all(18),
                         child: Column(
