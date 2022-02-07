@@ -1,9 +1,12 @@
-// ignore_for_file: use_key_in_widget_constructors, unnecessary_new, must_be_immutable
+// ignore_for_file: use_key_in_widget_constructors, unnecessary_new, must_be_immutable, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kbc_app/services/QuestionModel.dart';
 import 'package:kbc_app/services/QuizQueCreator.dart';
+import 'package:kbc_app/services/firedb.dart';
+import 'package:kbc_app/views/loser.dart';
+import 'package:kbc_app/views/win.dart';
 import 'package:kbc_app/widgets/lifeline_sidebar.dart';
 
 class Question extends StatefulWidget {
@@ -40,6 +43,11 @@ class _QuestionState extends State<Question> {
     });
   }
 
+  bool optALocked = false;
+  bool optBLocked = false;
+  bool optCLocked = false;
+  bool optDLocked = false;
+
   @override
   void initState() {
     super.initState();
@@ -61,7 +69,16 @@ class _QuestionState extends State<Question> {
           ),
           centerTitle: true,
         ),
-        drawer: const LifelineDrawer(),
+        drawer: LifelineDrawer(
+          question: questionModel.question,
+          opt1: questionModel.option1,
+          opt2: questionModel.option2,
+          opt3: questionModel.option3,
+          opt4: questionModel.option4,
+          correctAns: questionModel.correctAnswer,
+          quizID: widget.quizID,
+          currentQueMon: widget.queMoney,
+        ),
         floatingActionButton: ElevatedButton(
             onPressed: () {},
             child: Text(
@@ -111,53 +128,169 @@ class _QuestionState extends State<Question> {
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.all(14),
-                margin: const EdgeInsets.symmetric(horizontal: 17, vertical: 5),
-                decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.6),
-                    borderRadius: BorderRadius.circular(33)),
-                child: Text("A. ${questionModel.option1}",
-                    style: GoogleFonts.aBeeZee(
-                        fontSize: 17, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center),
+              InkWell(
+                onTap: (() => print("Doubel Tap to lock the Answer")),
+                onDoubleTap: () {
+                  setState(() {
+                    optALocked = true;
+                  });
+                  Future.delayed(const Duration(seconds: 2), (() async {
+                    if (questionModel.option1 == questionModel.correctAnswer) {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Win(widget.queMoney, widget.quizID)));
+                    } else {
+                      await FireDB.updateMoney(widget.queMoney ~/ 2);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Looser(
+                                    correctAns: questionModel.correctAnswer,
+                                    wonMon: (widget.queMoney ~/ 2),
+                                  )));
+                    }
+                  }));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.all(14),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 17, vertical: 5),
+                  decoration: BoxDecoration(
+                      color: optALocked
+                          ? Colors.yellow
+                          : Colors.white.withOpacity(0.6),
+                      borderRadius: BorderRadius.circular(33)),
+                  child: Text("A. ${questionModel.option1}",
+                      style: GoogleFonts.aBeeZee(
+                          fontSize: 17, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center),
+                ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.all(14),
-                margin: const EdgeInsets.symmetric(horizontal: 17, vertical: 5),
-                decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.6),
-                    borderRadius: BorderRadius.circular(33)),
-                child: Text("B. ${questionModel.option2}",
-                    style: GoogleFonts.aBeeZee(
-                        fontSize: 17, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center),
+              InkWell(
+                onTap: (() => print("Doubel Tap to lock the Answer")),
+                onDoubleTap: () {
+                  setState(() {
+                    optBLocked = true;
+                  });
+                  Future.delayed(const Duration(seconds: 2), (() async {
+                    if (questionModel.option2 == questionModel.correctAnswer) {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Win(widget.queMoney, widget.quizID)));
+                    } else {
+                      await FireDB.updateMoney(widget.queMoney ~/ 2);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Looser(
+                                    correctAns: questionModel.correctAnswer,
+                                    wonMon: (widget.queMoney ~/ 2),
+                                  )));
+                    }
+                  }));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.all(14),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 17, vertical: 5),
+                  decoration: BoxDecoration(
+                      color: optBLocked
+                          ? Colors.yellow
+                          : Colors.white.withOpacity(0.6),
+                      borderRadius: BorderRadius.circular(33)),
+                  child: Text("B. ${questionModel.option2}",
+                      style: GoogleFonts.aBeeZee(
+                          fontSize: 17, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center),
+                ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.all(14),
-                margin: const EdgeInsets.symmetric(horizontal: 17, vertical: 5),
-                decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.6),
-                    borderRadius: BorderRadius.circular(33)),
-                child: Text("C. ${questionModel.option3}",
-                    style: GoogleFonts.aBeeZee(
-                        fontSize: 17, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center),
+              InkWell(
+                onTap: (() => print("Doubel Tap to lock the Answer")),
+                onDoubleTap: () {
+                  setState(() {
+                    optCLocked = true;
+                  });
+                  Future.delayed(const Duration(seconds: 2), (() async {
+                    if (questionModel.option3 == questionModel.correctAnswer) {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Win(widget.queMoney, widget.quizID)));
+                    } else {
+                      await FireDB.updateMoney(widget.queMoney ~/ 2);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Looser(
+                                    correctAns: questionModel.correctAnswer,
+                                    wonMon: (widget.queMoney ~/ 2),
+                                  )));
+                    }
+                  }));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.all(14),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 17, vertical: 5),
+                  decoration: BoxDecoration(
+                      color: optCLocked
+                          ? Colors.yellow
+                          : Colors.white.withOpacity(0.6),
+                      borderRadius: BorderRadius.circular(33)),
+                  child: Text("C. ${questionModel.option3}",
+                      style: GoogleFonts.aBeeZee(
+                          fontSize: 17, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center),
+                ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.all(14),
-                margin: const EdgeInsets.symmetric(horizontal: 17, vertical: 5),
-                decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.6),
-                    borderRadius: BorderRadius.circular(33)),
-                child: Text("D. ${questionModel.option4}",
-                    style: GoogleFonts.aBeeZee(
-                        fontSize: 17, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center),
+              InkWell(
+                onTap: (() => print("Doubel Tap to lock the Answer")),
+                onDoubleTap: () {
+                  setState(() {
+                    optDLocked = true;
+                  });
+                  Future.delayed(const Duration(seconds: 2), (() async {
+                    if (questionModel.option4 == questionModel.correctAnswer) {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Win(widget.queMoney, widget.quizID)));
+                    } else {
+                      await FireDB.updateMoney(widget.queMoney ~/ 2);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Looser(
+                                    correctAns: questionModel.correctAnswer,
+                                    wonMon: (widget.queMoney ~/ 2),
+                                  )));
+                    }
+                  }));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.all(14),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 17, vertical: 5),
+                  decoration: BoxDecoration(
+                      color: optDLocked
+                          ? Colors.yellow
+                          : Colors.white.withOpacity(0.6),
+                      borderRadius: BorderRadius.circular(33)),
+                  child: Text("D. ${questionModel.option4}",
+                      style: GoogleFonts.aBeeZee(
+                          fontSize: 17, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center),
+                ),
               ),
             ]),
       ),

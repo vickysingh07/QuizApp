@@ -1,12 +1,15 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, non_constant_identifier_names, use_key_in_widget_constructors, must_be_immutable
 
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
+import 'package:kbc_app/services/question.dart';
 
 class Win extends StatefulWidget {
-  const Win({Key? key}) : super(key: key);
+  int queMoney;
+  String QuizID;
+  Win(this.queMoney, this.QuizID);
 
   @override
   _WinState createState() => _WinState();
@@ -65,8 +68,8 @@ class _WinState extends State<Win> {
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
                         )),
-                    const Text("Rs.50,000",
-                        style: TextStyle(
+                    Text("Rs. ${widget.queMoney}",
+                        style: const TextStyle(
                           fontSize: 35,
                           fontWeight: FontWeight.w700,
                         )),
@@ -78,7 +81,14 @@ class _WinState extends State<Win> {
                         child: Image.asset("assets/cheque.jpg")),
                     ElevatedButton(
                       child: const Text("Next Question"),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => Question(
+                                    quizID: widget.QuizID,
+                                    queMoney: (widget.queMoney) * 2))));
+                      },
                     )
                   ])),
               buildConfettiWidget(confettiController, pi / 2),

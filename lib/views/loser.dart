@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -5,8 +7,7 @@ class Looser extends StatelessWidget {
   int wonMon;
   String correctAns;
 
-  Looser({Key? key, required this.wonMon, required this.correctAns})
-      : super(key: key);
+  Looser({required this.wonMon, required this.correctAns});
 
   @override
   Widget build(BuildContext context) {

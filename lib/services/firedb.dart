@@ -31,6 +31,24 @@ class FireDB {
     }
   }
 
+  static updateMoney(int amount) async {
+    if (amount != 2500) {
+      final FirebaseAuth _myauth = FirebaseAuth.instance;
+
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(_myauth.currentUser!.uid)
+          .get()
+          .then((value) async {
+        await LocalDB.saveMoney((value.data()!["money"] + amount).toString());
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(_myauth.currentUser!.uid)
+            .update({"money": value.data()!["money"] + amount});
+      });
+    }
+  }
+
   Future<bool> getUser() async {
     // ignore: non_constant_identifier_names
     final User? current_user = _auth.currentUser;

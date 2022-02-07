@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:kbc_app/services/checkquizunlock.dart';
+import 'package:kbc_app/services/localdb.dart';
 import 'package:kbc_app/services/question.dart';
 import 'package:kbc_app/services/quizdhandha.dart';
 
@@ -37,6 +38,13 @@ class _QuizIntroState extends State<QuizIntro> {
     });
   }
 
+  setLifeLAvail() async {
+    await LocalDB.saveAud(true);
+    await LocalDB.saveJoker(true);
+    await LocalDB.save50(true);
+    await LocalDB.saveExp(true);
+  }
+
   @override
   void initState() {
     getQuizUnlockStatus();
@@ -57,8 +65,9 @@ class _QuizIntroState extends State<QuizIntro> {
                   ? Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              Question(quizID: widget.QuizId, queMoney: 5000)))
+                          builder: (context) => Question(
+                              quizID: widget.QuizId,
+                              queMoney: 5000))).then((value) => setLifeLAvail())
                   : QuizDhandha.buyQuiz(
                           QuizID: widget.QuizId,
                           QuizPrice: int.parse(widget.QuizPrice))
