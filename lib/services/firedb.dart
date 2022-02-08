@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,7 +7,6 @@ import 'package:kbc_app/services/localdb.dart';
 class FireDB {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   createNewUser(String name, String email, String photoUrl, String uid) async {
-    // ignore: non_constant_identifier_names
     final User? current_user = _auth.currentUser;
     if (await getUser()) {
       print("USER ALREADY EXISTS");
@@ -36,13 +35,13 @@ class FireDB {
       final FirebaseAuth _myauth = FirebaseAuth.instance;
 
       await FirebaseFirestore.instance
-          .collection("users")
+          .collection("user")
           .doc(_myauth.currentUser!.uid)
           .get()
           .then((value) async {
         await LocalDB.saveMoney((value.data()!["money"] + amount).toString());
         await FirebaseFirestore.instance
-            .collection("users")
+            .collection("user")
             .doc(_myauth.currentUser!.uid)
             .update({"money": value.data()!["money"] + amount});
       });
@@ -50,7 +49,6 @@ class FireDB {
   }
 
   Future<bool> getUser() async {
-    // ignore: non_constant_identifier_names
     final User? current_user = _auth.currentUser;
     String user = "";
 
@@ -60,6 +58,7 @@ class FireDB {
         .get()
         .then((value) async {
       user = value.data().toString();
+      print(user);
       await LocalDB.saveMoney("999989");
       await LocalDB.saveRank("444");
       await LocalDB.saveLevel("45");

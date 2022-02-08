@@ -1,4 +1,4 @@
-// ignore_for_file: await_only_futures, use_key_in_widget_constructors, invalid_required_positional_param, must_be_immutable, prefer_const_declarations, prefer_const_constructors
+// ignore_for_file: use_key_in_widget_constructors, invalid_required_positional_param, prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:kbc_app/services/auth.dart';
@@ -29,11 +29,12 @@ class SideNav extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => Profile(
-                            name: name,
-                            rank: rank,
-                            money: money,
-                            proUrl: proUrl,
-                            level: level)));
+                              name: name,
+                              rank: rank,
+                              proUrl: proUrl,
+                              level: level,
+                              money: money,
+                            )));
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +64,7 @@ class SideNav extends StatelessWidget {
                               height: 10,
                             ),
                             Text(
-                              "Rs. $money",
+                              "Rs.$money",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 15),
                             )
@@ -135,8 +136,8 @@ class SideNav extends StatelessWidget {
       required IconData icon,
       required BuildContext context,
       required MaterialPageRoute path}) {
-    final color = Colors.white;
-    final hovercolor = Colors.white60;
+    const color = Colors.white;
+    const hovercolor = Colors.white60;
 
     return ListTile(
       leading: Icon(

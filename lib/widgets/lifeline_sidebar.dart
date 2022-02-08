@@ -1,11 +1,14 @@
-// ignore_for_file: avoid_unnecessary_containers, non_constant_identifier_names, use_key_in_widget_constructors, must_be_immutable, avoid_print
+// ignore_for_file: avoid_unnecessary_containers, non_constant_identifier_names, use_key_in_widget_constructors, must_be_immutable, avoid_print, avoid_function_literals_in_foreach_calls, prefer_const_constructors
 
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:kbc_app/services/localdb.dart';
+import 'package:kbc_app/services/question.dart';
+import 'package:kbc_app/views/AskTheExpert.dart';
 import 'package:kbc_app/views/AudiencePoll.dart';
+import 'package:kbc_app/views/fifty50.dart';
 
 class LifelineDrawer extends StatefulWidget {
   late String question;
@@ -121,7 +124,19 @@ class _LifelineDrawerState extends State<LifelineDrawer> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () async {
+                  if (await checkJokAvail()) {
+                    await LocalDB.saveJoker(false);
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Question(
+                                quizID: widget.quizID,
+                                queMoney: widget.currentQueMon)));
+                  } else {
+                    print("JOKER LIFELINE IS ALREADY USED");
+                  }
+                },
                 child: Column(
                   children: [
                     Card(
@@ -142,7 +157,22 @@ class _LifelineDrawerState extends State<LifelineDrawer> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () async {
+                  if (await checkf50Avail()) {
+                    await LocalDB.save50(false);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Fifty50(
+                                opt1: widget.opt1,
+                                opt2: widget.opt2,
+                                opt3: widget.opt3,
+                                opt4: widget.opt4,
+                                correctAns: widget.correctAns)));
+                  } else {
+                    print("YOU ALREADY USED FIFTY50 LIFELINE");
+                  }
+                },
                 child: Column(
                   children: [
                     Card(
@@ -163,7 +193,36 @@ class _LifelineDrawerState extends State<LifelineDrawer> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () async {
+                  if (await checkExpAvail()) {
+                    String ytUrl = "";
+                    await FirebaseFirestore.instance
+                        .collection("quizzes")
+                        .doc(widget.quizID)
+                        .collection("questions")
+                        .where("question", isEqualTo: widget.question)
+                        .get()
+                        .then((value) async {
+                      print("ASK THE EXPERT HERE");
+                      print(widget.quizID);
+                      print(widget.question);
+                      value.docs.forEach((element) {
+                        print("YT LINK IS HERE");
+
+                        print(element.data()["AnswerYTLinkID"]);
+                        ytUrl = element.data()["AnswerYTLinkID"];
+                      });
+
+                      print(value.docs.elementAt(0).data()["AnswerYTLinkID"]);
+                      await LocalDB.saveExp(false);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AskTheExpert(
+                                  question: widget.question, yTURL: ytUrl)));
+                    });
+                  }
+                },
                 child: Column(
                   children: [
                     Card(
@@ -207,18 +266,37 @@ class _LifelineDrawerState extends State<LifelineDrawer> {
                     reverse: true,
                     itemCount: 13,
                     itemBuilder: (context, index) {
+                      if (2500 * (pow(2, index + 1)) == widget.currentQueMon) {
+                        return ListTile(
+                          tileColor: Colors.deepPurpleAccent,
+                          leading: Text(
+                            "${index + 1}.",
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
+                          title: Text(
+                            "Rs.${2500 * (pow(2, index + 1))}",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 20),
+                          ),
+                          trailing: Icon(
+                            Icons.circle,
+                            color: Colors.purpleAccent,
+                          ),
+                        );
+                      }
                       return ListTile(
                         leading: Text(
-                          "${index + 1}",
-                          style:
-                              const TextStyle(fontSize: 20, color: Colors.grey),
+                          "${index + 1}.",
+                          style: TextStyle(fontSize: 20, color: Colors.grey),
                         ),
                         title: Text(
-                          "RS. ${2500 * (pow(2, index + 1))}",
-                          style: GoogleFonts.aBeeZee(
+                          "Rs.${2500 * (pow(2, index + 1))}",
+                          style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
-                        trailing: const Icon(Icons.circle),
+                        trailing: Icon(Icons.circle),
                       );
                     }),
               ),

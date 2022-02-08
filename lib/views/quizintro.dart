@@ -43,6 +43,12 @@ class _QuizIntroState extends State<QuizIntro> {
     await LocalDB.saveJoker(true);
     await LocalDB.save50(true);
     await LocalDB.saveExp(true);
+    Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    Question(quizID: widget.QuizId, queMoney: 5000)))
+        .then((value) => setLifeLAvail());
   }
 
   @override
@@ -62,12 +68,7 @@ class _QuizIntroState extends State<QuizIntro> {
             ),
             onPressed: () async {
               quizIsUnlocked
-                  ? Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Question(
-                              quizID: widget.QuizId,
-                              queMoney: 5000))).then((value) => setLifeLAvail())
+                  ? setLifeLAvail()
                   : QuizDhandha.buyQuiz(
                           QuizID: widget.QuizId,
                           QuizPrice: int.parse(widget.QuizPrice))
