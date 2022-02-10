@@ -1,18 +1,18 @@
-// ignore_for_file: prefer_const_declarations, non_constant_identifier_names, await_only_futures, avoid_print
+// ignore_for_file: constant_identifier_names, await_only_futures, avoid_print
 
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalDB {
-  static final uidKey = "fsfjkfskjfsfv";
-  static final lkey = "467435bvesgwyh";
-  static final rkey = "4543467435bvesgwyh";
-  static final nkey = "45363w54svegrft";
-  static final mkey = "65g14er4efesdfeaswcsdfv45";
-  static final pkey = "65g14ascafder4ev45";
-  static final Audkey = "gswdgxertea";
-  static final Jokkey = "65g1d24wtafder4ev45";
-  static final F50key = "ffterybewryvwresw";
-  static final ExpKey = "65g14eryjeryubs45wwwwascafder4ev45";
+  static const uidKey = "fsfjkfskjfsfv";
+  static const lkey = "467435bvesgwyh";
+  static const rkey = "4543467435bvesgwyh";
+  static const nkey = "45363w54svegrft";
+  static const mkey = "65g14er4efesdfeaswcsdfv45";
+  static const pkey = "65g14ascafder4ev45";
+  static const Audkey = "gswdgxertea";
+  static const Jokkey = "65g1d24wtafder4ev45";
+  static const F50key = "ffterybewryvwresw";
+  static const ExpKey = "65g14eryjeryubs45wwwwascafder4ev45";
 
   static Future<bool> saveUserID(String uid) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();

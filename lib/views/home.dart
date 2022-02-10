@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, sized_box_for_whitespace, duplicate_ignore
+// ignore_for_file: non_constant_identifier_names, prefer_const_literals_to_create_immutables, prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,6 +7,7 @@ import 'package:kbc_app/services/home_fire.dart';
 import 'package:kbc_app/services/localdb.dart';
 import 'package:kbc_app/views/quizintro.dart';
 import 'package:kbc_app/widgets/sidenavbar.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -61,6 +62,7 @@ class _HomeState extends State<Home> {
     await HomeFire.getquizzes().then((returned_quizzes) {
       setState(() {
         quizzes = returned_quizzes;
+        isLoading = false;
       });
     });
   }
@@ -88,221 +90,195 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: ((context) => Home())));
-      },
-      child: Scaffold(
-          appBar: AppBar(
-            title: Text('KBC - Quiz Game'),
-          ),
-          drawer: SideNav(name, money, lead, proUrl, level),
-          body: SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 15),
+    return isLoading
+        ? Scaffold(
+            body: Center(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CarouselSlider(
-                      items: [
-                        Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                    "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                  ),
-                                  fit: BoxFit.cover)),
-                        ),
-                      ],
-                      options: CarouselOptions(
-                          height: 180,
-                          enlargeCenterPage: true,
-                          autoPlay: true,
-                          aspectRatio: 16 / 9,
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          enableInfiniteScroll: true,
-                          autoPlayAnimationDuration:
-                              Duration(milliseconds: 800),
-                          viewportFraction: 0.8)),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        CircleAvatar(
-                            backgroundColor: Colors.purple, radius: 35),
-                        CircleAvatar(
-                            backgroundColor: Colors.redAccent, radius: 35),
-                        CircleAvatar(backgroundColor: Colors.green, radius: 35),
-                        CircleAvatar(
-                            backgroundColor: Colors.yellowAccent, radius: 35),
-                      ],
-                    ),
+                  Text(
+                    "KBC QUIZ APP",
+                    style: GoogleFonts.alata(
+                        fontSize: 16, fontWeight: FontWeight.w600),
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    child: Row(
-                      children: [
-                        Flexible(
-                            flex: 1,
-                            fit: FlexFit.tight,
-                            child: Stack(
-                              children: [
-                                Card(
-                                  elevation: 8,
-                                  child: Container(
-                                    height: 150,
-                                    child: Image.network(
-                                      "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-                        SizedBox(width: 10),
-                        Flexible(
-                            flex: 1,
-                            fit: FlexFit.tight,
-                            child: Stack(
-                              children: [
-                                Card(
-                                  elevation: 8,
-                                  child: Container(
-                                    height: 150,
-                                    child: Image.network(
-                                        "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                        fit: BoxFit.cover),
-                                  ),
-                                ),
-                              ],
-                            ))
-                      ],
-                    ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 20),
+                    child: LinearProgressIndicator(),
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    child: Row(
-                      children: [
-                        Flexible(
-                            flex: 1,
-                            fit: FlexFit.tight,
-                            child: Stack(
-                              children: [
-                                Card(
-                                  elevation: 8,
-                                  child: Container(
-                                    height: 150,
-                                    child: Image.network(
-                                      "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-                        SizedBox(width: 10),
-                        Flexible(
-                            flex: 1,
-                            fit: FlexFit.tight,
-                            child: Stack(
-                              children: [
-                                Card(
-                                  elevation: 8,
-                                  child: Container(
-                                    height: 150,
-                                    child: Image.network(
-                                        "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                        fit: BoxFit.cover),
-                                  ),
-                                ),
-                              ],
-                            ))
-                      ],
-                    ),
+                ],
+              ),
+            ),
+          )
+        : RefreshIndicator(
+            onRefresh: () async {
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Home()));
+            },
+            child: Scaffold(
+                appBar: AppBar(
+                  title: Text(
+                    'KBC - Quiz Game',
+                    style: GoogleFonts.aleo(
+                        fontSize: 22, fontWeight: FontWeight.w600),
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12),
-                    child: Stack(
-                      children: [
-                        Card(
-                          elevation: 8,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 100,
-                            child: Image.network(
-                                "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                fit: BoxFit.cover),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Richest Player In The World",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircleAvatar(
-                                    // backgroundImage:
-                                    //     NetworkImage(TopPlayer["photoUrl"]),
-                                    // radius: 50,
-                                    ),
-                                SizedBox(
-                                  width: 50,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Text(
-                                      "Vicky Singh",
-                                      // TopPlayer["name"].toString().length >= 16
-                                      //     ? "${TopPlayer["name"].toString().substring(0, 15)}..."
-                                      //     : TopPlayer["name"],
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text("Rs. 450000",
-                                        style: TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold))
-                                  ],
-                                )
-                              ],
-                            )
-                          ])),
-                  Container(
-                    padding: EdgeInsets.all(15),
+                ),
+                drawer: SideNav(name, money, lead, proUrl, level),
+                body: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 15),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Unlock New Quizzes",
-                          style: TextStyle(
-                              fontSize: 19, fontWeight: FontWeight.w600),
-                          textAlign: TextAlign.left,
-                        ),
+                        CarouselSlider(
+                            items: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => QuizIntro(
+                                                QuizAbout:
+                                                    (quizzes[0])["about_quiz"],
+                                                QuizImgUrl: (quizzes[0])[
+                                                    "quiz_thumbnail"],
+                                                QuizDuration:
+                                                    (quizzes[0])["duration"],
+                                                QuizTopics:
+                                                    (quizzes[0])["topics"],
+                                                QuizName:
+                                                    (quizzes[0])["quiz_name"],
+                                                QuizId: (quizzes[0])["Quizid"],
+                                                QuizPrice: (quizzes[0])[
+                                                    "unlock_money"],
+                                              )));
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                            (quizzes[0])["quiz_thumbnail"],
+                                          ),
+                                          fit: BoxFit.cover)),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => QuizIntro(
+                                                QuizAbout:
+                                                    (quizzes[0])["about_quiz"],
+                                                QuizImgUrl: (quizzes[0])[
+                                                    "quiz_thumbnail"],
+                                                QuizDuration:
+                                                    (quizzes[0])["duration"],
+                                                QuizTopics:
+                                                    (quizzes[0])["topics"],
+                                                QuizName:
+                                                    (quizzes[0])["quiz_name"],
+                                                QuizId: (quizzes[0])["Quizid"],
+                                                QuizPrice: (quizzes[0])[
+                                                    "unlock_money"],
+                                              )));
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                            (quizzes[0])["quiz_thumbnail"],
+                                          ),
+                                          fit: BoxFit.cover)),
+                                ),
+                              ),
+                            ],
+                            options: CarouselOptions(
+                                height: 180,
+                                enlargeCenterPage: true,
+                                autoPlay: true,
+                                aspectRatio: 16 / 9,
+                                autoPlayCurve: Curves.fastOutSlowIn,
+                                enableInfiniteScroll: true,
+                                autoPlayAnimationDuration:
+                                    Duration(milliseconds: 800),
+                                viewportFraction: 0.8)),
                         Container(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 15),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Richest Player In The World",
+                                    style: GoogleFonts.alice(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundImage:
+                                            NetworkImage(TopPlayer["photoUrl"]),
+                                        radius: 50,
+                                      ),
+                                      SizedBox(
+                                        width: 50,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            TopPlayer["name"]
+                                                        .toString()
+                                                        .length >=
+                                                    16
+                                                ? "${TopPlayer["name"].toString().substring(0, 15)}..."
+                                                : TopPlayer["name"],
+                                            style: GoogleFonts.alike(
+                                                fontSize: 23,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.deepOrange),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            "Rs. ${TopPlayer["money"]}",
+                                            style: GoogleFonts.alike(
+                                                fontSize: 23,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.deepOrange),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  )
+                                ])),
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Flexible(
-                                  flex: 1,
-                                  fit: FlexFit.tight,
+                              Text(
+                                "Quizzes To Earn Money",
+                                style: GoogleFonts.alice(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              Center(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30)),
+                                  padding: EdgeInsets.symmetric(vertical: 5),
                                   child: InkWell(
                                     onTap: () {
                                       Navigator.push(
@@ -330,7 +306,8 @@ class _HomeState extends State<Home> {
                                         Card(
                                           elevation: 8,
                                           child: Container(
-                                            height: 150,
+                                            height: 200,
+                                            width: 300,
                                             child: Image.network(
                                               (quizzes[0])["quiz_thumbnail"],
                                               fit: BoxFit.cover,
@@ -339,237 +316,36 @@ class _HomeState extends State<Home> {
                                         ),
                                       ],
                                     ),
-                                  )),
-                              SizedBox(width: 10),
-                              Flexible(
-                                  flex: 1,
-                                  fit: FlexFit.tight,
-                                  child: Stack(
-                                    children: [
-                                      Card(
-                                        elevation: 8,
-                                        child: Container(
-                                          height: 150,
-                                          child: Image.network(
-                                              "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                              fit: BoxFit.cover),
-                                        ),
-                                      ),
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
-                            children: [
-                              Flexible(
-                                  flex: 1,
-                                  fit: FlexFit.tight,
-                                  child: Stack(
-                                    children: [
-                                      Card(
-                                        elevation: 8,
-                                        child: Container(
-                                          height: 150,
-                                          child: Image.network(
-                                            "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                              SizedBox(width: 10),
-                              Flexible(
-                                  flex: 1,
-                                  fit: FlexFit.tight,
-                                  child: Stack(
-                                    children: [
-                                      Card(
-                                        elevation: 8,
-                                        child: Container(
-                                          height: 150,
-                                          child: Image.network(
-                                              "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                              fit: BoxFit.cover),
-                                        ),
-                                      ),
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
-                            children: [
-                              Flexible(
-                                  flex: 1,
-                                  fit: FlexFit.tight,
-                                  child: Stack(
-                                    children: [
-                                      Card(
-                                        elevation: 8,
-                                        child: Container(
-                                          height: 150,
-                                          child: Image.network(
-                                            "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                              SizedBox(width: 10),
-                              Flexible(
-                                  flex: 1,
-                                  fit: FlexFit.tight,
-                                  child: Stack(
-                                    children: [
-                                      Card(
-                                        elevation: 8,
-                                        child: Container(
-                                          height: 150,
-                                          child: Image.network(
-                                              "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                              fit: BoxFit.cover),
-                                        ),
-                                      ),
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
-                            children: [
-                              Flexible(
-                                  flex: 1,
-                                  fit: FlexFit.tight,
-                                  child: Stack(
-                                    children: [
-                                      Card(
-                                        elevation: 8,
-                                        child: Container(
-                                          height: 150,
-                                          child: Image.network(
-                                            "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                              SizedBox(width: 10),
-                              Flexible(
-                                  flex: 1,
-                                  fit: FlexFit.tight,
-                                  child: Stack(
-                                    children: [
-                                      Card(
-                                        elevation: 8,
-                                        child: Container(
-                                          height: 150,
-                                          child: Image.network(
-                                              "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                              fit: BoxFit.cover),
-                                        ),
-                                      ),
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12),
-                    child: Stack(
-                      children: [
-                        Card(
-                          elevation: 8,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 100,
-                            child: Image.network(
-                                "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
-                                fit: BoxFit.cover),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  CarouselSlider(
-                      items: [
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                    "https://images.unsplash.com/photo-1632931612792-fbaacfd952f6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80",
                                   ),
-                                  fit: BoxFit.cover)),
+                                ),
+                              ),
+                              Center(
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 5),
+                                  child: Stack(
+                                    children: [
+                                      Card(
+                                        elevation: 8,
+                                        child: Container(
+                                          height: 200,
+                                          width: 300,
+                                          child: Image.network(
+                                            "https://images.unsplash.com/photo-1515325595179-59cd5262ca53?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80",
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
-                      options: CarouselOptions(
-                          height: 180,
-                          autoPlay: true,
-                          aspectRatio: 16 / 9,
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          enableInfiniteScroll: true,
-                          autoPlayAnimationDuration:
-                              Duration(milliseconds: 800),
-                          viewportFraction: 0.8)),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        CircleAvatar(
-                            backgroundColor: Colors.purple, radius: 35),
-                        CircleAvatar(
-                            backgroundColor: Colors.redAccent, radius: 35),
-                        CircleAvatar(backgroundColor: Colors.green, radius: 35),
-                      ],
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        CircleAvatar(
-                            backgroundColor: Colors.purple, radius: 35),
-                        CircleAvatar(
-                            backgroundColor: Colors.redAccent, radius: 35),
-                        CircleAvatar(backgroundColor: Colors.green, radius: 35),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        CircleAvatar(
-                            backgroundColor: Colors.purple, radius: 35),
-                        CircleAvatar(
-                            backgroundColor: Colors.redAccent, radius: 35),
-                        CircleAvatar(backgroundColor: Colors.green, radius: 35),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )),
-    );
+                )),
+          );
   }
 }

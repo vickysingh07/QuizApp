@@ -1,8 +1,7 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, must_be_immutable, unnecessary_brace_in_string_interps
 
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class Looser extends StatelessWidget {
   int wonMon;
   String correctAns;
@@ -12,12 +11,12 @@ class Looser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage("assets/loose.png"), fit: BoxFit.cover)),
       child: Scaffold(
           floatingActionButton: ElevatedButton(
-            child: const Text("Retry"),
+            child: Text("Retry"),
             onPressed: () {},
           ),
           backgroundColor: Colors.transparent,
@@ -26,47 +25,45 @@ class Looser extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Oh Sorry!",
+                  Text("Oh Sorry!",
                       style: TextStyle(
                         fontSize: 35,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       )),
-                  const Text("YOUR ANSWER IS INCORRECT",
+                  Text("YOUR ANSWER IS INCORRECT",
                       style: TextStyle(
                         fontSize: 17,
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
                       )),
-                  // ignore: unnecessary_brace_in_string_interps
                   Text("CORRECT ANSWER IS ${correctAns}",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 17,
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
                       )),
-                  const SizedBox(
+                  SizedBox(
                     height: 15,
                   ),
-                  const Text("You Won",
+                  Text("You Won",
                       style: TextStyle(
                         fontSize: 15,
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
                       )),
                   Text("Rs.${wonMon == 2500 ? 0 : wonMon}",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 35,
                         color: Colors.white,
                         fontWeight: FontWeight.w700,
                       )),
-                  const SizedBox(
+                  SizedBox(
                     height: 25,
                   ),
-                  const Icon(Icons.error_outline,
-                      size: 100, color: Colors.white),
+                  Icon(Icons.error_outline, size: 100, color: Colors.white),
                   ElevatedButton(
-                    child: const Text("Go To Rewards"),
+                    child: Text("Go To Rewards"),
                     onPressed: () {
                       Navigator.pop(context);
                     },

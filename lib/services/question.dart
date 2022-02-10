@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kbc_app/services/QuestionModel.dart';
 import 'package:kbc_app/services/QuizQueCreator.dart';
 import 'package:kbc_app/services/firedb.dart';
@@ -151,7 +152,11 @@ class _QuestionState extends State<Question> {
           appBar: AppBar(
             title: Text(
               "Rs.${widget.queMoney}",
-              style: TextStyle(fontSize: 25),
+              style: GoogleFonts.aleo(
+                  fontSize: 27,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.5,
+                  color: Colors.white),
             ),
             centerTitle: true,
           ),
@@ -165,10 +170,15 @@ class _QuestionState extends State<Question> {
             quizID: widget.quizID,
             currentQueMon: widget.queMoney,
           ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
           floatingActionButton: ElevatedButton(
             child: Text(
               "QUIT GAME",
-              style: TextStyle(fontSize: 27),
+              style: GoogleFonts.aBeeZee(
+                  fontSize: 23,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white),
             ),
             onPressed: () {
               showDialog(
@@ -235,7 +245,10 @@ class _QuestionState extends State<Question> {
                       borderRadius: BorderRadius.circular(20)),
                   child: Text(
                     questionModel.question,
-                    style: TextStyle(fontSize: 22),
+                    style: GoogleFonts.aBeeZee(
+                        fontSize: 23,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black),
                     textAlign: TextAlign.center,
                   )),
               SizedBox(
@@ -283,10 +296,10 @@ class _QuestionState extends State<Question> {
                         borderRadius: BorderRadius.circular(34)),
                     child: Text(
                       "A. ${questionModel.option1}",
-                      style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                      style: GoogleFonts.aBeeZee(
+                          fontSize: 19,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
                       textAlign: TextAlign.center,
                     )),
               ),
@@ -332,10 +345,10 @@ class _QuestionState extends State<Question> {
                         borderRadius: BorderRadius.circular(34)),
                     child: Text(
                       "B. ${questionModel.option2}",
-                      style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                      style: GoogleFonts.aBeeZee(
+                          fontSize: 19,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
                       textAlign: TextAlign.center,
                     )),
               ),
@@ -382,10 +395,10 @@ class _QuestionState extends State<Question> {
                         borderRadius: BorderRadius.circular(34)),
                     child: Text(
                       "C. ${questionModel.option3}",
-                      style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                      style: GoogleFonts.aBeeZee(
+                          fontSize: 19,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
                       textAlign: TextAlign.center,
                     )),
               ),
@@ -431,10 +444,10 @@ class _QuestionState extends State<Question> {
                         borderRadius: BorderRadius.circular(34)),
                     child: Text(
                       "D. ${questionModel.option4}",
-                      style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                      style: GoogleFonts.aBeeZee(
+                          fontSize: 19,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
                       textAlign: TextAlign.center,
                     )),
               ),

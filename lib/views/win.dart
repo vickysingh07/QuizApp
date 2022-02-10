@@ -60,7 +60,7 @@ class _WinState extends State<Win> {
 
   void initController() {
     confettiController =
-        ConfettiController(duration: const Duration(seconds: 1));
+        ConfettiController(duration: const Duration(seconds: 3));
   }
 
   @override

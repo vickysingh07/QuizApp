@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, avoid_print
+// ignore_for_file: avoid_print, non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'localdb.dart';
@@ -12,7 +12,7 @@ class QuizDhandha {
       user_id = uID!;
     });
     await FirebaseFirestore.instance
-        .collection("user")
+        .collection("users")
         .doc(user_id)
         .get()
         .then((user) {
@@ -21,7 +21,7 @@ class QuizDhandha {
 
     if (paisaHaiKya) {
       await FirebaseFirestore.instance
-          .collection("user")
+          .collection("users")
           .doc(user_id)
           .collection("unlocked_quiz")
           .doc(QuizID)

@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kbc_app/services/localdb.dart';
 
 class Profile extends StatefulWidget {
@@ -73,7 +74,11 @@ class _ProfileState extends State<Profile> {
         ],
         title: Text(
           "Profile",
-          style: TextStyle(fontSize: 29),
+          style: GoogleFonts.aleo(
+              fontSize: 28,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+              letterSpacing: 1),
         ),
         centerTitle: true,
         elevation: 0.0,
@@ -117,10 +122,10 @@ class _ProfileState extends State<Profile> {
                   ),
                   Text(
                     "${widget.name}\nRs.${k_m_b_generator(int.parse(widget.money))}",
-                    style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500),
+                    style: GoogleFonts.alike(
+                        fontSize: 23,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
@@ -130,6 +135,7 @@ class _ProfileState extends State<Profile> {
                     thickness: 1,
                     indent: 20,
                     endIndent: 20,
+                    color: Colors.white,
                   ),
                   SizedBox(
                     height: 20,
@@ -139,11 +145,13 @@ class _ProfileState extends State<Profile> {
                     children: [
                       Column(
                         children: [
-                          Text("#${widget.rank}",
-                              style: TextStyle(
-                                  fontSize: 42,
-                                  fontWeight: FontWeight.w300,
-                                  color: Colors.white.withOpacity(0.9))),
+                          Text(
+                            "#${widget.rank}",
+                            style: GoogleFonts.aleo(
+                                fontSize: 44,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white),
+                          ),
                           Text("Rank",
                               style: TextStyle(
                                   fontSize: 19,
@@ -161,7 +169,10 @@ class _ProfileState extends State<Profile> {
             ),
             Text(
               "Leaderboard",
-              style: TextStyle(fontSize: 20),
+              style: GoogleFonts.aleo(
+                  fontSize: 25,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black),
             ),
             Column(
               children: [
@@ -182,23 +193,36 @@ class _ProfileState extends State<Profile> {
                                 SizedBox(
                                   width: 3,
                                 ),
-                                Text(LeadersList[index]
-                                            .data()["name"]
-                                            .toString()
-                                            .length >=
-                                        12
-                                    ? "${(LeadersList[index].data()["name"]).toString().substring(0, 12)}..."
-                                    : (LeadersList[index].data()["name"])
-                                        .toString())
+                                Text(
+                                  LeadersList[index]
+                                              .data()["name"]
+                                              .toString()
+                                              .length >=
+                                          12
+                                      ? "${(LeadersList[index].data()["name"]).toString().substring(0, 12)}..."
+                                      : (LeadersList[index].data()["name"])
+                                          .toString(),
+                                  style: GoogleFonts.aleo(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black),
+                                ),
                               ],
                             ),
                             leading: Text(
                               "#${index + 1}",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: GoogleFonts.aleo(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black),
                             ),
                             trailing: Text(
-                                "Rs.${k_m_b_generator(int.parse(LeadersList[index].data()["money"].toString()))}",
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                              "Rs.${k_m_b_generator(int.parse(LeadersList[index].data()["money"].toString()))}",
+                              style: GoogleFonts.aleo(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
+                            ),
                           );
                         },
                         separatorBuilder: (context, index) => Divider(

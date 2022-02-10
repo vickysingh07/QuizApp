@@ -1,6 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, invalid_required_positional_param, prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kbc_app/services/auth.dart';
 import 'package:kbc_app/views/home.dart';
 import 'package:kbc_app/views/login.dart';
@@ -19,7 +20,7 @@ class SideNav extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Material(
-        color: Color.fromRGBO(128, 0, 128, 1),
+        color: Colors.purple,
         child: ListView(
           // padding:  EdgeInsets.symmetric(horizontal: 20),
           children: [
@@ -55,18 +56,20 @@ class SideNav extends StatelessWidget {
                           children: [
                             Text(
                               name,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
+                              style: GoogleFonts.alike(
+                                  fontSize: 23,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white),
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 7,
                             ),
                             Text(
                               "Rs.$money",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 15),
+                              style: GoogleFonts.alike(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white),
                             )
                           ],
                         )
@@ -75,12 +78,13 @@ class SideNav extends StatelessWidget {
                   ),
                   Container(
                       padding: EdgeInsets.only(left: 25),
-                      child: Text("Leaderboard - $rank th Rank",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                          ))),
+                      child: Text(
+                        "Leaderboard - $rank Rank",
+                        style: GoogleFonts.alice(
+                            fontSize: 23,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                      )),
                 ],
               ),
             ),
@@ -91,6 +95,7 @@ class SideNav extends StatelessWidget {
               thickness: 1,
               indent: 10,
               endIndent: 10,
+              color: Colors.white,
             ),
             SizedBox(
               height: 24,
@@ -104,7 +109,12 @@ class SideNav extends StatelessWidget {
             listItem(
                 context: context,
                 path: MaterialPageRoute(
-                    builder: (BuildContext context) => Home()),
+                    builder: (BuildContext context) => Profile(
+                        name: name,
+                        proUrl: proUrl,
+                        level: level,
+                        rank: rank,
+                        money: money)),
                 label: "Leaderboard",
                 icon: Icons.leaderboard),
             listItem(
@@ -145,7 +155,11 @@ class SideNav extends StatelessWidget {
         color: color,
       ),
       hoverColor: hovercolor,
-      title: Text(label, style: TextStyle(color: color)),
+      title: Text(
+        label,
+        style: GoogleFonts.aBeeZee(
+            fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
+      ),
       onTap: () async {
         await signOut();
         Navigator.pushReplacement(context, path);

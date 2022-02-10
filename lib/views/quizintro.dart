@@ -1,6 +1,7 @@
-// ignore_for_file: non_constant_identifier_names, use_key_in_widget_constructors, must_be_immutable, avoid_print
+// ignore_for_file: non_constant_identifier_names, use_key_in_widget_constructors, must_be_immutable, avoid_print, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kbc_app/services/checkquizunlock.dart';
 import 'package:kbc_app/services/localdb.dart';
 import 'package:kbc_app/services/question.dart';
@@ -74,7 +75,6 @@ class _QuizIntroState extends State<QuizIntro> {
                           QuizPrice: int.parse(widget.QuizPrice))
                       .then((quizKharidLiya) {
                       if (quizKharidLiya) {
-                        print("GIII");
                         setState(() {
                           quizIsUnlocked = true;
                         });
@@ -96,7 +96,11 @@ class _QuizIntroState extends State<QuizIntro> {
                     });
             }),
         appBar: AppBar(
-          title: const Text("KBC Quiz App"),
+          title: Text(
+            "KBC Quiz App",
+            style: GoogleFonts.aleo(
+                fontSize: 23, fontWeight: FontWeight.w500, color: Colors.white),
+          ),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -113,8 +117,10 @@ class _QuizIntroState extends State<QuizIntro> {
                     Text(
                       widget.QuizName,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          fontSize: 30, fontWeight: FontWeight.w500),
+                      style: GoogleFonts.aleo(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black),
                     ),
                     Image.network(
                       widget.QuizImgUrl,
@@ -131,21 +137,26 @@ class _QuizIntroState extends State<QuizIntro> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        children: const [
-                          Icon(Icons.topic_outlined),
-                          SizedBox(
+                        children: [
+                          const Icon(Icons.topic_outlined),
+                          const SizedBox(
                             width: 6,
                           ),
                           Text(
                             "Related To -",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                            style: GoogleFonts.aleo(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black),
                           )
                         ],
                       ),
                       Text(
                         widget.QuizTopics,
-                        style: const TextStyle(fontSize: 17),
+                        style: GoogleFonts.aBeeZee(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black),
                       ),
                       Container(
                         padding: const EdgeInsets.all(18),
@@ -153,23 +164,27 @@ class _QuizIntroState extends State<QuizIntro> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
-                              children: const [
-                                Icon(Icons.topic_outlined),
+                              children: [
+                                Icon(Icons.access_time),
                                 SizedBox(
                                   width: 6,
                                 ),
                                 Text(
                                   "Duration -",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
+                                  style: GoogleFonts.aleo(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black),
                                 )
                               ],
                             ),
                             Text(
                               "${widget.QuizDuration} Minutes",
                               textAlign: TextAlign.left,
-                              style: const TextStyle(fontSize: 17),
+                              style: GoogleFonts.aBeeZee(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
                             )
                           ],
                         ),
@@ -182,23 +197,27 @@ class _QuizIntroState extends State<QuizIntro> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    children: const [
+                                    children: [
                                       Icon(Icons.money),
                                       SizedBox(
                                         width: 6,
                                       ),
                                       Text(
                                         "Money -",
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
+                                        style: GoogleFonts.aleo(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black),
                                       )
                                     ],
                                   ),
                                   Text(
                                     " Rs. ${widget.QuizPrice}",
                                     textAlign: TextAlign.left,
-                                    style: const TextStyle(fontSize: 17),
+                                    style: GoogleFonts.aBeeZee(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black),
                                   )
                                 ],
                               ),
@@ -209,22 +228,26 @@ class _QuizIntroState extends State<QuizIntro> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
-                              children: const [
-                                Icon(Icons.topic_outlined),
+                              children: [
+                                Icon(Icons.quiz),
                                 SizedBox(
                                   width: 6,
                                 ),
                                 Text(
                                   "About Quiz -",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
+                                  style: GoogleFonts.aleo(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black),
                                 )
                               ],
                             ),
                             Text(
                               widget.QuizAbout,
-                              style: const TextStyle(fontSize: 17),
+                              style: GoogleFonts.aBeeZee(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
                             )
                           ],
                         ),
