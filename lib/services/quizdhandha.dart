@@ -12,7 +12,7 @@ class QuizDhandha {
       user_id = uID!;
     });
     await FirebaseFirestore.instance
-        .collection("users")
+        .collection("user")
         .doc(user_id)
         .get()
         .then((user) {
@@ -21,7 +21,7 @@ class QuizDhandha {
 
     if (paisaHaiKya) {
       await FirebaseFirestore.instance
-          .collection("users")
+          .collection("user")
           .doc(user_id)
           .collection("unlocked_quiz")
           .doc(QuizID)

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kbc_app/services/checkquizunlock.dart';
 import 'package:kbc_app/services/localdb.dart';
-import 'package:kbc_app/services/question.dart';
 import 'package:kbc_app/services/quizdhandha.dart';
+import 'package:kbc_app/views/home.dart';
 
 class QuizIntro extends StatefulWidget {
   String QuizName;
@@ -44,11 +44,7 @@ class _QuizIntroState extends State<QuizIntro> {
     await LocalDB.saveJoker(true);
     await LocalDB.save50(true);
     await LocalDB.saveExp(true);
-    Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    Question(quizID: widget.QuizId, queMoney: 5000)))
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()))
         .then((value) => setLifeLAvail());
   }
 
@@ -64,7 +60,7 @@ class _QuizIntroState extends State<QuizIntro> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: ElevatedButton(
             child: Text(
-              quizIsUnlocked ? "START QUIZ" : "UNLOCK QUIZ",
+              quizIsUnlocked ? "Got It" : "UNLOCK QUIZ",
               style: const TextStyle(fontSize: 20),
             ),
             onPressed: () async {

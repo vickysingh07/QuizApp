@@ -69,7 +69,10 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.share)),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.share),
+          ),
           IconButton(onPressed: () {}, icon: Icon(Icons.person_add)),
         ],
         title: Text(

@@ -5,7 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kbc_app/services/home_fire.dart';
 import 'package:kbc_app/services/localdb.dart';
+import 'package:kbc_app/views/generalknow.dart';
 import 'package:kbc_app/views/quizintro.dart';
+import 'package:kbc_app/views/riddle.dart';
 import 'package:kbc_app/widgets/sidenavbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -136,21 +138,9 @@ class _HomeState extends State<Home> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => QuizIntro(
-                                                QuizAbout:
-                                                    (quizzes[0])["about_quiz"],
-                                                QuizImgUrl: (quizzes[0])[
-                                                    "quiz_thumbnail"],
-                                                QuizDuration:
-                                                    (quizzes[0])["duration"],
-                                                QuizTopics:
-                                                    (quizzes[0])["topics"],
-                                                QuizName:
-                                                    (quizzes[0])["quiz_name"],
-                                                QuizId: (quizzes[0])["Quizid"],
-                                                QuizPrice: (quizzes[0])[
-                                                    "unlock_money"],
-                                              )));
+                                          builder: (context) => Riddle(
+                                              quizID: (quizzes[0])["Quizid"],
+                                              queMoney: 5000)));
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -167,28 +157,16 @@ class _HomeState extends State<Home> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => QuizIntro(
-                                                QuizAbout:
-                                                    (quizzes[0])["about_quiz"],
-                                                QuizImgUrl: (quizzes[0])[
-                                                    "quiz_thumbnail"],
-                                                QuizDuration:
-                                                    (quizzes[0])["duration"],
-                                                QuizTopics:
-                                                    (quizzes[0])["topics"],
-                                                QuizName:
-                                                    (quizzes[0])["quiz_name"],
-                                                QuizId: (quizzes[0])["Quizid"],
-                                                QuizPrice: (quizzes[0])[
-                                                    "unlock_money"],
-                                              )));
+                                          builder: (context) => GeneralKnow(
+                                              quizID: (quizzes[1])["Quizid"],
+                                              queMoney: 5000)));
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
                                       image: DecorationImage(
                                           image: NetworkImage(
-                                            (quizzes[0])["quiz_thumbnail"],
+                                            (quizzes[1])["quiz_thumbnail"],
                                           ),
                                           fit: BoxFit.cover)),
                                 ),
@@ -267,7 +245,7 @@ class _HomeState extends State<Home> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Quizzes To Earn Money",
+                                "About The Quizzes",
                                 style: GoogleFonts.alice(
                                   fontSize: 22,
                                   fontWeight: FontWeight.w600,
@@ -306,7 +284,7 @@ class _HomeState extends State<Home> {
                                         Card(
                                           elevation: 8,
                                           child: Container(
-                                            height: 200,
+                                            height: 170,
                                             width: 300,
                                             child: Image.network(
                                               (quizzes[0])["quiz_thumbnail"],
@@ -320,22 +298,45 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                               Center(
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 5),
-                                  child: Stack(
-                                    children: [
-                                      Card(
-                                        elevation: 8,
-                                        child: Container(
-                                          height: 200,
-                                          width: 300,
-                                          child: Image.network(
-                                            "https://images.unsplash.com/photo-1515325595179-59cd5262ca53?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80",
-                                            fit: BoxFit.cover,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => QuizIntro(
+                                                  QuizAbout: (quizzes[1])[
+                                                      "about_quiz"],
+                                                  QuizImgUrl: (quizzes[1])[
+                                                      "quiz_thumbnail"],
+                                                  QuizDuration:
+                                                      (quizzes[1])["duration"],
+                                                  QuizTopics:
+                                                      (quizzes[1])["topics"],
+                                                  QuizName:
+                                                      (quizzes[1])["quiz_name"],
+                                                  QuizId:
+                                                      (quizzes[1])["Quizid"],
+                                                  QuizPrice: (quizzes[1])[
+                                                      "unlock_money"],
+                                                )));
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    child: Stack(
+                                      children: [
+                                        Card(
+                                          elevation: 8,
+                                          child: Container(
+                                            height: 170,
+                                            width: 300,
+                                            child: Image.network(
+                                              (quizzes[1])["quiz_thumbnail"],
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

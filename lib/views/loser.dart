@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, must_be_immutable, unnecessary_brace_in_string_interps
 
 import 'package:flutter/material.dart';
+import 'package:kbc_app/views/home.dart';
 
 class Looser extends StatelessWidget {
   int wonMon;
@@ -17,7 +18,10 @@ class Looser extends StatelessWidget {
       child: Scaffold(
           floatingActionButton: ElevatedButton(
             child: Text("Retry"),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Home()));
+            },
           ),
           backgroundColor: Colors.transparent,
           body: Center(
