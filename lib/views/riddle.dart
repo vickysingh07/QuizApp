@@ -256,9 +256,6 @@ class _RiddleState extends State<Riddle> {
               ),
               InkWell(
                 onTap: () {
-                  print("DOUBLE TAP TO LOCK THE ANSWER");
-                },
-                onLongPress: () {
                   playLock();
                   timer?.cancel();
                   setState(() {
@@ -305,9 +302,6 @@ class _RiddleState extends State<Riddle> {
               ),
               InkWell(
                 onTap: () {
-                  print("DOUBLE TAP TO LOCK THE ANSWER");
-                },
-                onLongPress: () {
                   playLock();
                   timer?.cancel();
                   setState(() {
@@ -354,9 +348,6 @@ class _RiddleState extends State<Riddle> {
               ),
               InkWell(
                 onTap: () {
-                  print("DOUBLE TAP TO LOCK THE ANSWER");
-                },
-                onLongPress: () {
                   playLock();
                   timer?.cancel();
 
@@ -404,9 +395,6 @@ class _RiddleState extends State<Riddle> {
               ),
               InkWell(
                 onTap: () {
-                  print("DOUBLE TAP TO LOCK THE ANSWER");
-                },
-                onLongPress: () {
                   playLock();
                   timer?.cancel();
                   setState(() {

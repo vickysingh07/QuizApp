@@ -7,6 +7,7 @@ import 'dart:math';
 
 import 'package:kbc_app/services/firedb.dart';
 import 'package:kbc_app/services/question.dart';
+import 'package:kbc_app/views/home.dart';
 
 class Win extends StatefulWidget {
   int queMoney;
@@ -121,12 +122,19 @@ class _WinState extends State<Win> {
                       ElevatedButton(
                         child: Text("Next Question"),
                         onPressed: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Question(
-                                      quizID: widget.QuizID,
-                                      queMoney: (widget.queMoney) * 2)));
+                          if (widget.queMoney == 10240000) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Home()));
+                          } else {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Question(
+                                        quizID: widget.QuizID,
+                                        queMoney: (widget.queMoney) * 2)));
+                          }
                         },
                       )
                     ])),
