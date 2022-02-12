@@ -93,7 +93,7 @@ class _QuizIntroState extends State<QuizIntro> {
             }),
         appBar: AppBar(
           title: Text(
-            "KBC Quiz App",
+            "MMQ Game",
             style: GoogleFonts.aleo(
                 fontSize: 23, fontWeight: FontWeight.w500, color: Colors.white),
           ),

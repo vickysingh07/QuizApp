@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, prefer_const_literals_to_create_immutables, prefer_const_constructors, sized_box_for_whitespace
+// ignore_for_file: non_constant_identifier_names, prefer_const_literals_to_create_immutables, prefer_const_constructors, sized_box_for_whitespace, avoid_types_as_parameter_names
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -82,6 +82,27 @@ class _HomeState extends State<Home> {
     });
   }
 
+  String k_m_b_generator(num) {
+    if (num > 999 && num < 99999) {
+      return "${(num / 1000).toStringAsFixed(1)} K";
+    } else if (num > 99999 && num < 999999) {
+      return "${(num / 1000).toStringAsFixed(0)} K";
+    } else if (num > 999999 && num < 999999999) {
+      return "${(num / 1000000).toStringAsFixed(1)} M";
+    } else if (num > 999999999) {
+      return "${(num / 1000000000).toStringAsFixed(1)} B";
+    } else {
+      return num.toString();
+    }
+  }
+
+  setLifeLAvail() async {
+    await LocalDB.saveAud(true);
+    await LocalDB.saveJoker(true);
+    await LocalDB.save50(true);
+    await LocalDB.saveExp(true);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -99,7 +120,7 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "KBC QUIZ APP",
+                    "Money Maker Quiz",
                     style: GoogleFonts.alata(
                         fontSize: 16, fontWeight: FontWeight.w600),
                   ),
@@ -120,7 +141,7 @@ class _HomeState extends State<Home> {
             child: Scaffold(
                 appBar: AppBar(
                   title: Text(
-                    'KBC - Quiz Game',
+                    'MMQ Game',
                     style: GoogleFonts.aleo(
                         fontSize: 22, fontWeight: FontWeight.w600),
                   ),
@@ -135,6 +156,7 @@ class _HomeState extends State<Home> {
                             items: [
                               InkWell(
                                 onTap: () {
+                                  setLifeLAvail();
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -154,6 +176,7 @@ class _HomeState extends State<Home> {
                               ),
                               InkWell(
                                 onTap: () {
+                                  setLifeLAvail();
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -228,7 +251,7 @@ class _HomeState extends State<Home> {
                                             height: 5,
                                           ),
                                           Text(
-                                            "Rs. ${TopPlayer["money"]}",
+                                            "Rs. ${k_m_b_generator(TopPlayer["money"])}",
                                             style: GoogleFonts.alike(
                                                 fontSize: 23,
                                                 fontWeight: FontWeight.w600,

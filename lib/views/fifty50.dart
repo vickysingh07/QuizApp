@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, must_be_immutable, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Fifty50 extends StatefulWidget {
   String opt1;
@@ -23,6 +25,13 @@ class _Fifty50State extends State<Fifty50> {
   late String WrongOpt1;
   late String WrongOpt2;
   List WrongOption = [];
+
+  final player = AudioCache();
+  playLock() async {
+    final player = AudioCache();
+    player.play("audio_effects/LIFELINEE.mp3");
+  }
+
   fetchWrongOptons() {
     setState(() {
       if (widget.opt1 != widget.correctAns) {
@@ -45,6 +54,7 @@ class _Fifty50State extends State<Fifty50> {
   void initState() {
     super.initState();
     fetchWrongOptons();
+    playLock();
     Future.delayed(Duration(seconds: 10), () {
       Navigator.pop(context);
     });
@@ -66,27 +76,30 @@ class _Fifty50State extends State<Fifty50> {
             children: [
               Text(
                 "FIFTY 50 LIFELINE",
-                style: TextStyle(
-                    fontSize: 25,
+                style: GoogleFonts.alice(
                     color: Colors.white,
-                    fontWeight: FontWeight.bold),
+                    fontSize: 32,
+                    fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,
               ),
               SizedBox(
                 height: 20,
               ),
               Text(
-                "${WrongOption[0]} AND ${WrongOption[1]}  IS INCORRECT OPTIONS",
+                "'${WrongOption[0]}' AND '${WrongOption[1]}' are INCORRECT OPTIONS.",
                 style: TextStyle(
                     fontSize: 20,
-                    color: Colors.white,
+                    color: Colors.cyanAccent.withOpacity(0.8),
                     fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 18,
               ),
               Text(
                 "You Will Be Automatically Redirected To Quiz Screen In 10 Seconds.",
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 17,
                     color: Colors.white,
                     fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,

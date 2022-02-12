@@ -31,28 +31,32 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple,
+      backgroundColor: Colors.deepOrange.withOpacity(0.8),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/kbc4.png"),
+            Image.asset(
+              "assets/kbc5.png",
+              height: 220,
+              width: 220,
+            ),
             SizedBox(
-              height: 35,
+              height: 32,
             ),
             Text(
               "Welcome To",
               style: GoogleFonts.acme(
                   color: Colors.white,
-                  fontSize: 26,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             Text(
-              "Kaun Banega Crorepati",
+              "Money Maker Quizzes",
               style: GoogleFonts.acme(
                   color: Colors.greenAccent,
-                  fontSize: 30,
+                  fontSize: 36,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),

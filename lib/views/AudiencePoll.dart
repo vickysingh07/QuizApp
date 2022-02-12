@@ -3,6 +3,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AudiencePoll extends StatefulWidget {
   String question;
@@ -28,6 +30,13 @@ class _AudiencePollState extends State<AudiencePoll> {
   void initState() {
     super.initState();
     VotingMachine();
+    playLock();
+  }
+
+  final player = AudioCache();
+  playLock() async {
+    final player = AudioCache();
+    player.play("audio_effects/LIFELINEE.mp3");
   }
 
   int opt1Votes = 0;
@@ -36,7 +45,7 @@ class _AudiencePollState extends State<AudiencePoll> {
   int opt4Votes = 0;
   bool isVoting = true;
   VotingMachine() {
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(Duration(seconds: 7), () {
       setState(() {
         if (widget.opt1 == widget.correctAns) {
           opt1Votes = Random().nextInt(100);
@@ -70,8 +79,6 @@ class _AudiencePollState extends State<AudiencePoll> {
     });
   }
 
-//MAKE  A BETTER UI OF AUDINECE POLL
-  //HIDE OPTIONS VOTE WHEN AUDIENCE IS VOTING
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,29 +94,29 @@ class _AudiencePollState extends State<AudiencePoll> {
             children: [
               Text(
                 "Audience Poll Lifeline",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 27,
-                    color: Colors.white),
+                style: GoogleFonts.alice(
+                    color: Colors.lightGreenAccent,
+                    fontSize: 32,
+                    fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,
               ),
               SizedBox(
-                height: 20,
+                height: 55,
               ),
               Text("Question  - ${widget.question}",
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 17,
+                      fontSize: 20,
                       color: Colors.white),
                   textAlign: TextAlign.center),
               SizedBox(
-                height: 10,
+                height: 15,
               ),
               Text(isVoting ? "Audience is Voting" : "Here are the Results",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
+                  style: GoogleFonts.alike(
+                      color: Colors.lightGreenAccent,
                       fontSize: 25,
-                      color: Colors.white),
+                      fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center),
               SizedBox(
                 height: 10,
@@ -126,37 +133,37 @@ class _AudiencePollState extends State<AudiencePoll> {
               SizedBox(
                 height: 5,
               ),
-              Text("${widget.opt1}\t\t${opt1Votes} Votes",
+              Text("${widget.opt1}\t\t-   ${opt1Votes} Votes",
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
-                      fontSize: 15,
+                      fontSize: 18,
                       color: Colors.white),
                   textAlign: TextAlign.center),
               SizedBox(
                 height: 3,
               ),
-              Text("${widget.opt2}\t\t${opt2Votes} Votes",
+              Text("${widget.opt2}\t\t-   ${opt2Votes} Votes",
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
-                      fontSize: 15,
+                      fontSize: 18,
                       color: Colors.white),
                   textAlign: TextAlign.center),
               SizedBox(
                 height: 3,
               ),
-              Text("${widget.opt3}\t\t${opt3Votes} Votes",
+              Text("${widget.opt3}\t\t-   ${opt3Votes} Votes",
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
-                      fontSize: 15,
+                      fontSize: 18,
                       color: Colors.white),
                   textAlign: TextAlign.center),
               SizedBox(
                 height: 3,
               ),
-              Text("${widget.opt4}\t\t${opt4Votes} Votes",
+              Text("${widget.opt4}\t\t-   ${opt4Votes} Votes",
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
-                      fontSize: 15,
+                      fontSize: 18,
                       color: Colors.white),
                   textAlign: TextAlign.center),
             ],

@@ -80,7 +80,7 @@ class _QuestionState extends State<Question> {
 
   playLock() async {
     final player = AudioCache();
-    player.play("audio_effects/LOCK_SCREEN.mp3");
+    player.play("audio_effects/LOCK_SCREENN.mp3");
   }
 //TASK - ADD OTHER SOUND EFFECTS TO THE APP
 
@@ -262,7 +262,7 @@ class _QuestionState extends State<Question> {
                     optALocked = true;
                   });
 
-                  Future.delayed(Duration(seconds: 3), () async {
+                  Future.delayed(Duration(seconds: 4), () async {
                     if (questionModel.option1 == questionModel.correctAnswer) {
                       Navigator.pushReplacement(
                           context,
@@ -308,7 +308,7 @@ class _QuestionState extends State<Question> {
                     optBLocked = true;
                   });
 
-                  Future.delayed(Duration(seconds: 3), () async {
+                  Future.delayed(Duration(seconds: 4), () async {
                     if (questionModel.option2 == questionModel.correctAnswer) {
                       Navigator.pushReplacement(
                           context,
@@ -355,7 +355,7 @@ class _QuestionState extends State<Question> {
                     optCLocked = true;
                   });
 
-                  Future.delayed(Duration(seconds: 3), () async {
+                  Future.delayed(Duration(seconds: 4), () async {
                     if (questionModel.option3 == questionModel.correctAnswer) {
                       Navigator.pushReplacement(
                           context,
@@ -401,7 +401,7 @@ class _QuestionState extends State<Question> {
                     optDLocked = true;
                   });
 
-                  Future.delayed(Duration(seconds: 3), () async {
+                  Future.delayed(Duration(seconds: 4), () async {
                     if (questionModel.option4 == questionModel.correctAnswer) {
                       Navigator.pushReplacement(
                           context,

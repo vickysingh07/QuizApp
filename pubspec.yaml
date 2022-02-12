@@ -47,7 +47,8 @@ dependencies:
   confetti: ^0.6.0
   youtube_player_flutter: ^8.0.0
   audioplayers: ^0.20.1
-
+  share: ^2.0.4
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -74,7 +75,6 @@ flutter:
   assets:
     - assets/
     - assets/audio_effects/
-    - assets/app_banner/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

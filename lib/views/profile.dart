@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:share/share.dart';
 import 'package:kbc_app/services/localdb.dart';
 
 class Profile extends StatefulWidget {
@@ -70,16 +71,17 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              await Share.share("text");
+            },
             icon: Icon(Icons.share),
           ),
-          IconButton(onPressed: () {}, icon: Icon(Icons.person_add)),
         ],
         title: Text(
           "Profile",
           style: GoogleFonts.aleo(
               fontSize: 28,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
               color: Colors.white,
               letterSpacing: 1),
         ),

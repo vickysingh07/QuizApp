@@ -80,7 +80,7 @@ class _RiddleState extends State<Riddle> {
 
   playLock() async {
     final player = AudioCache();
-    player.play("audio_effects/LOCK_SCREEN.mp3");
+    player.play("audio_effects/LOCK_SCREENN.mp3");
   }
 //TASK - ADD OTHER SOUND EFFECTS TO THE APP
 
@@ -262,7 +262,7 @@ class _RiddleState extends State<Riddle> {
                     optALocked = true;
                   });
 
-                  Future.delayed(Duration(seconds: 3), () async {
+                  Future.delayed(Duration(seconds: 4), () async {
                     if (questionModel.option1 == questionModel.correctAnswer) {
                       Navigator.pushReplacement(
                           context,
@@ -288,7 +288,7 @@ class _RiddleState extends State<Riddle> {
                     margin: EdgeInsets.symmetric(horizontal: 17, vertical: 5),
                     decoration: BoxDecoration(
                         color: optALocked
-                            ? Colors.yellow.withOpacity(0.4)
+                            ? Colors.yellow.withOpacity(0.8)
                             : Colors.white.withOpacity(0.4),
                         borderRadius: BorderRadius.circular(34)),
                     child: Text(
@@ -308,7 +308,7 @@ class _RiddleState extends State<Riddle> {
                     optBLocked = true;
                   });
 
-                  Future.delayed(Duration(seconds: 3), () async {
+                  Future.delayed(Duration(seconds: 4), () async {
                     if (questionModel.option2 == questionModel.correctAnswer) {
                       Navigator.pushReplacement(
                           context,
@@ -334,7 +334,7 @@ class _RiddleState extends State<Riddle> {
                     margin: EdgeInsets.symmetric(horizontal: 17, vertical: 5),
                     decoration: BoxDecoration(
                         color: optBLocked
-                            ? Colors.yellow.withOpacity(0.4)
+                            ? Colors.yellow.withOpacity(0.8)
                             : Colors.white.withOpacity(0.4),
                         borderRadius: BorderRadius.circular(34)),
                     child: Text(
@@ -355,7 +355,7 @@ class _RiddleState extends State<Riddle> {
                     optCLocked = true;
                   });
 
-                  Future.delayed(Duration(seconds: 3), () async {
+                  Future.delayed(Duration(seconds: 4), () async {
                     if (questionModel.option3 == questionModel.correctAnswer) {
                       Navigator.pushReplacement(
                           context,
@@ -381,7 +381,7 @@ class _RiddleState extends State<Riddle> {
                     margin: EdgeInsets.symmetric(horizontal: 17, vertical: 5),
                     decoration: BoxDecoration(
                         color: optCLocked
-                            ? Colors.yellow.withOpacity(0.4)
+                            ? Colors.yellow.withOpacity(0.8)
                             : Colors.white.withOpacity(0.4),
                         borderRadius: BorderRadius.circular(34)),
                     child: Text(
@@ -401,7 +401,7 @@ class _RiddleState extends State<Riddle> {
                     optDLocked = true;
                   });
 
-                  Future.delayed(Duration(seconds: 3), () async {
+                  Future.delayed(Duration(seconds: 4), () async {
                     if (questionModel.option4 == questionModel.correctAnswer) {
                       Navigator.pushReplacement(
                           context,
@@ -427,7 +427,7 @@ class _RiddleState extends State<Riddle> {
                     margin: EdgeInsets.symmetric(horizontal: 17, vertical: 5),
                     decoration: BoxDecoration(
                         color: optDLocked
-                            ? Colors.yellow.withOpacity(0.4)
+                            ? Colors.yellow.withOpacity(0.8)
                             : Colors.white.withOpacity(0.4),
                         borderRadius: BorderRadius.circular(34)),
                     child: Text(

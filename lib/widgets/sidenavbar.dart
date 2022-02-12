@@ -109,12 +109,7 @@ class SideNav extends StatelessWidget {
             listItem(
                 context: context,
                 path: MaterialPageRoute(
-                    builder: (BuildContext context) => Profile(
-                        name: name,
-                        proUrl: proUrl,
-                        level: level,
-                        rank: rank,
-                        money: money)),
+                    builder: (BuildContext context) => Home()),
                 label: "Leaderboard",
                 icon: Icons.leaderboard),
             listItem(
