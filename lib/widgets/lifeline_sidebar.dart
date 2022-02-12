@@ -264,7 +264,7 @@ class _LifelineDrawerState extends State<LifelineDrawer> {
                 child: ListView.builder(
                     shrinkWrap: true,
                     reverse: true,
-                    itemCount: 13,
+                    itemCount: 12,
                     itemBuilder: (context, index) {
                       if (2500 * (pow(2, index + 1)) == widget.currentQueMon) {
                         return ListTile(

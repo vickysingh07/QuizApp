@@ -27,7 +27,7 @@ class _AskTheExpertState extends State<AskTheExpert> {
         backgroundColor: Colors.purple,
         body: Center(
           child: Container(
-            margin: EdgeInsets.symmetric(vertical: 200, horizontal: 30),
+            margin: EdgeInsets.symmetric(vertical: 170, horizontal: 30),
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: Colors.purpleAccent,
