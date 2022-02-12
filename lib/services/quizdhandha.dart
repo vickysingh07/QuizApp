@@ -26,7 +26,6 @@ class QuizDhandha {
           .collection("unlocked_quiz")
           .doc(QuizID)
           .set({"unlcoked_at": DateTime.now()});
-      //DO YOUR TASK HERE
       print("QUIZ IS UNLOCKED NOW");
       return true;
     } else {

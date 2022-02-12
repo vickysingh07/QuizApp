@@ -49,7 +49,6 @@ class _RiddleState extends State<Riddle> {
   bool optBLocked = false;
   bool optCLocked = false;
   bool optDLocked = false;
-//CHANGE THE TIMER SECONDS ACCORDING TO MONEY WON
   int maxSeconds = 30;
   int seconds = 30;
   Timer? timer;
@@ -82,7 +81,6 @@ class _RiddleState extends State<Riddle> {
     final player = AudioCache();
     player.play("audio_effects/LOCK_SCREENN.mp3");
   }
-//TASK - ADD OTHER SOUND EFFECTS TO THE APP
 
   playLosserSound() async {
     final player = AudioCache();

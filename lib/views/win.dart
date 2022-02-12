@@ -18,7 +18,6 @@ class Win extends StatefulWidget {
   _WinState createState() => _WinState();
 }
 
-//MAKE A GRAND WINNING SCREEN
 class _WinState extends State<Win> {
   late ConfettiController confettiController;
 
